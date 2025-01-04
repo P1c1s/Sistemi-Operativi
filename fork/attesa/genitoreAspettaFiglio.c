@@ -5,7 +5,7 @@
 
 int main(){
 
-    printf("Programma dove il genitore aspetta il figlio.\n");
+    printf("Programma dove il genitore aspetta il figlio.\n\n");
     
     int pid = fork();
 
