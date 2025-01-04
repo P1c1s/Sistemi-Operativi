@@ -6,7 +6,7 @@
 int main() {
 
     printf("Programma che esegue n fork, ogni fork da vita ad un nuovo processo figlio\n");
-    printf("che a sua volta da vita ad un nuovi processi per via delle n-1 fork.\n\n");
+    printf("che a sua volta da vita ad nuovi processi per via delle n-1 fork.\n\n");
 
     int pid = fork();
     pid = fork();
