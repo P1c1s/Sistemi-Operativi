@@ -1,10 +1,14 @@
 # Sistemi-Operativi
 
-### Fork
-#### Presentazione
+
+## Fork
+### Presentazione
 Esempi con stampe dei pid dei processi genitori e figli
-#### Attesa
+### Attesa
 Esempi con wait(), waitpid()
-#### Files
+### Files
 Esempi con open(), close()
-### Thread
+
+## Memoria
+
+## Thread
