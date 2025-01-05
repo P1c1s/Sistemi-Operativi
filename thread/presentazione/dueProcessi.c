@@ -1,33 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <pthread.h>
+#include <unistd.h>
 
 #define NUM_THREADS 3
 
-int contatore = 0; // Contatore condiviso
-pthread_mutex_t mutex; // Mutex per proteggere l'accesso al contatore
-
-void* creazioneThread(void* arg){
-    pthread_mutex_lock(&mutex); // Acquisisce il mutex
-    contatore++;
-    pthread_mutex_unlock(&mutex); // Rilascia il mutex
-    printf("[PID %d] Thread %d\n", getpid(), contatore);
+// Funzione che verrà eseguita dai thread
+void* creazioneThread(void* arg) {
+    int pid = *((int*)arg); // Cast dell'argomento a un intero
+    pthread_t thread_id = pthread_self(); // Ottiene l'ID del thread corrente
+    if(pid>0)
+        printf("[PID %d] Processo genitore - Thread ID: %lu\n", getpid(), (unsigned long)thread_id);
+    else if(pid==0)
+        printf("[PID %d] Processo figlio - Thread ID: %lu\n", getpid(), (unsigned long)thread_id);
     return NULL;
 }
 
 int main() {
-    
-    printf("Programma che crea N thread sempre per due processi distinti\n\n");
 
-    fork();
+    printf("Programma che crea due processi che sfruttano una funzione\n");
+    printf("per creare tre thread ciasuno\n\n");
 
-    pthread_t threads[NUM_THREADS];
-    pthread_mutex_init(&mutex, NULL); // Inizializza il mutex
+    int pid = fork();
+    pthread_t threads[NUM_THREADS]; // Array per memorizzare gli ID dei thread
 
     // Creazione dei thread
     for (int i = 0; i < NUM_THREADS; i++) {
-        pthread_create(&threads[i], NULL, creazioneThread, NULL);
+        if (pthread_create(&threads[i], NULL, creazioneThread, (void*)&pid) != 0) {
+            perror("pthread_create");
+            exit(1);
+        }
     }
 
     // Attesa della terminazione dei thread
@@ -35,8 +37,6 @@ int main() {
         pthread_join(threads[i], NULL);
     }
 
-    printf("Eseguiti %d thread del processo %d\n", contatore, getpid());
-    pthread_mutex_destroy(&mutex); // Distrugge il mutex
-
+    //printf("Tutti i thread sono terminati.\n");
     return 0;
 }
