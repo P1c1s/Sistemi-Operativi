@@ -11,10 +11,10 @@ int main(){
 
     if(pid>0){
         wait(NULL);
-        printf("[genitore] Arrivederci dal processo -> %d\n", getpid());
+        printf("[PID %d] Arrivederci dal processo genitore \n", getpid());
     }
     else if(pid==0)
-        printf("[figlio] Buon giorno dal processo -> %d\n", getpid());
+        printf("[PID %d] Buon giorno dal processo figlio \n", getpid());
     else if(pid==-1)
         fprintf(stderr, "Errore fork\n");
 

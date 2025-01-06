@@ -13,10 +13,10 @@ int main(){
 
     if(pid>0){
         waitpid(pid, NULL, 0);
-        printf("[%d] Sono il processo padre di %d e l'ho aspettato\n", getpid(), pid);
+        printf("[PID %d] Sono il processo padre di %d e l'ho aspettato\n", getpid(), pid);
     }
     else if(pid==0)
-        printf("[%d] Sono il processo figlio di %d e ho la precedenza\n", getpid(), getppid());
+        printf("[PID %d] Sono il processo figlio di %d e ho la precedenza\n", getpid(), getppid());
     else if(pid==-1)
         fprintf(stderr, "Errore fork\n");
 
