@@ -14,8 +14,8 @@ int main() {
     for(int i=0; i<NUM_CHILDREN; i++){
         pids[i] = fork(); // Creazione di un nuovo processo
         if(pids[i]<0){
-            perror("Errore nella creazione del processo");
-            exit(EXIT_FAILURE);
+            fprintf(stderr, "Errore nella creazione del processo");
+            exit(1);
         }else if(pids[i]==0){
             // Questo è il processo figlio
             printf("Processo figlio %d: PID = %d, conto fino a 5...\n", i + 1, getpid());

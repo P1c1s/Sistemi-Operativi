@@ -9,9 +9,9 @@ int main(){
     int pid = fork();
 
     if(pid>0)
-        printf("[genitore] %d\n", getpid());
+        printf("[PID %d] genitore \n", getpid());
     else if(pid==0)
-        printf("[figlio] %d\n", getpid());
+        printf("[PID %d] figlio \n", getpid());
     else if(pid==-1)
         fprintf(stderr, "ciao");
 
