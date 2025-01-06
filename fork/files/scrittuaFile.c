@@ -6,10 +6,11 @@
 
 int main(){
 
-    printf("Programma che prima scrive in un file\n");
+    printf("Programma che prima scrive in file.txt\n");
     printf("1) genitore scrive il titolo nel file\n");
     printf("2) genitore scrive nel file\n");
     printf("3) figlio scrive nel file\n\n");
+    printf("NB: L'ordine dei punti 2 e 3 viene deciso dallo scheduler\n");
 
 
     int  fd = open("file.txt", O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);

@@ -7,7 +7,7 @@ int main(){
     
     printf("Programma che usa la pipe per passare un messagio\n");
     printf("tra il processo figlio e il processo genitore.\n");
-    printf("+ pipefd[0] -> lettura\n + pipefd[1] -> scrittura\n\n");
+    printf("+ pipefd[0] -> lettura\n+ pipefd[1] -> scrittura\n\n");
 
     int pipefd[2];
     if (pipe(pipefd) == -1){
