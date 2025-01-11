@@ -17,14 +17,15 @@ void aggiungiElemento(int* vettore, int *dimensione){
 }
 
 void aggiungiElementi(int* vettore, int *dimensione){
+    int vecchiaDimensione = (*dimensione);
     int n = 0;
     printf("Quanti numeri vuoi inserire? ");
     scanf("%d", &n);
-    *dimensione=*dimensione+n;
-    vettore = (int*)realloc(vettore, (*dimensione+n)*sizeof(int));
-    for(int i=0; i<n; i++){
-        printf("Iserisci %d° numero: ", i+1);
-        scanf("%d", &vettore[*dimensione+i]);
+    *dimensione=(*dimensione)+n;
+    vettore = (int*)realloc(vettore, (*dimensione)*sizeof(int));
+    for(int i=vecchiaDimensione; i<(*dimensione); i++){
+        printf("Iserisci %d° numero: ", i-vecchiaDimensione+1);
+        scanf("%d", &vettore[i]);
     }
 }
 
@@ -50,7 +51,6 @@ int main(){
         printf("0) Esci\n");
         printf("comando atteso: ");
         scanf("%d", &comando);
-
         if(comando==1)
             aggiungiElemento(vettore, &dimensione);
         else if(comando==2)
@@ -59,8 +59,6 @@ int main(){
             rimuoviElementoInCoda(vettore, &dimensione);
         else if(comando==4)
             stampa(vettore, dimensione);
-
-
     }while(comando!=0);
 
     free(vettore);
