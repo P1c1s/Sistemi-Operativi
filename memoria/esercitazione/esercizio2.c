@@ -30,8 +30,8 @@ void aggiungiElementi(int* vettore, int *dimensione){
 }
 
 void rimuoviElementoInCoda(int* vettore, int *dimensione){
-    *dimensione = *dimensione-1;
-    vettore = (int*)realloc(vettore, sizeof(*dimensione)+sizeof(int));
+    *dimensione = (*dimensione)-1;
+    vettore = (int*)realloc(vettore, (*dimensione)*sizeof(int));
 }
 
 int main(){
