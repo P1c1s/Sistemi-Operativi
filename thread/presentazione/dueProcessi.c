@@ -27,7 +27,7 @@ int main() {
     // Creazione dei thread
     for (int i = 0; i < NUM_THREADS; i++) {
         if (pthread_create(&threads[i], NULL, creazioneThread, (void*)&pid) != 0) {
-            perror("pthread_create");
+            fprintf(stderr, "pthread_create");
             exit(1);
         }
     }
