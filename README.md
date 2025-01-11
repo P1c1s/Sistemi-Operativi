@@ -6,14 +6,14 @@
 3. [Fork](#fork)
 4. [Thread](#thread)
 
-## Files{#files}
+## Files
 ### Sintassi  
 - `#include <fcntl.h>` libreria per la la gestione dei files
     - `open()`
     - `close()`
 ### Programmi
 
-## Memoria{#memory}
+## Memoria
 ### Sintassi 
 - `#include <stdlib.h>` libreria per la gestione della memoria
     - `malloc()`
@@ -21,7 +21,7 @@
     - `free()`
 ### Programmi
 
-## Fork {#fork}
+## Fork
 ### Sintassi 
 - `#include <unistd.h>` libreria per la creazione e la gestione dei processi
     - `fork()` funzione che crea un processo che restituisce un intero pari al pid del processo creato
