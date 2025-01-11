@@ -2,7 +2,7 @@
 
 ## Indice
 1. [Files](#files)
-2. [Memoria](#memory)
+2. [Memoria](#memoria)
 3. [Fork](#fork)
 4. [Thread](#thread)
 
