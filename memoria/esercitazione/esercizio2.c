@@ -55,7 +55,7 @@ int main(){
 
     int dimensione = 0;
     int comando;
-    int *vettore = (int*)malloc(dimensione* sizeof(int));
+    int* vettore = (int*)malloc(dimensione* sizeof(int));
 
     do{
         printf("\n\n----------Menu'----------\n");   

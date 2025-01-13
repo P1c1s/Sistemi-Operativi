@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <math.h>
+
 
 #define DIM 10
 #define RESET   "\033[0m"  // Reset del colore
@@ -42,6 +44,11 @@ void* divisione(void* arg){
         printf(BLUE "[Divisione] %d/%d=%f\n", (int)numeri[i].uno, (int)numeri[i].due, (numeri[i].uno / numeri[i].due));
 }
 
+void* potenza(void* arg){
+    strutturaBinaria* numeri = (strutturaBinaria*)arg;
+    for(int i=0; i<DIM; i++)
+            printf(MAGENTA "[Potenza] %d^%d=%f\n", (int)numeri[i].uno, (int)numeri[i].due, pow(numeri[i].uno, numeri[i].due));
+}
 
 int main(){
 
@@ -59,6 +66,7 @@ int main(){
     pthread_create(&threads[1], NULL, sottrazione, (void*)&numeri);
     pthread_create(&threads[2], NULL, moltiplicazione, (void*)&numeri);
     pthread_create(&threads[3], NULL, divisione, (void*)&numeri);
+    pthread_create(&threads[4], NULL, potenza, (void*)&numeri);
 
     for(int i=0; i<4; i++)
         pthread_join(threads[i], NULL);

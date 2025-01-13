@@ -5,7 +5,7 @@ int main(){
     printf("Programma che crea un vettore di dimenione variabile.\n\n");
 
     int dimensione = 0;
-    int *vettore;
+    int* vettore;
     
     printf("Quanti numeri vuoi inserire?\n");
     printf("valore atteso: ");
