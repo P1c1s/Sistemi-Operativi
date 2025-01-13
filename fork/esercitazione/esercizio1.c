@@ -4,10 +4,10 @@
 
 int main(){
 
-    int x = 100;
-
     printf("Programma che stampa il valore della variabile x prima e dopo\n");
     printf("il suo incremento che avviene dopo la fork.\n\n");
+    
+    int x = 100;
     int pid = fork();
 
     if(pid>0){
