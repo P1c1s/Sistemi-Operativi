@@ -9,29 +9,44 @@ void stampa(int* vettore, int dimensione){
     printf("]");
 }
 
-void aggiungiElemento(int* vettore, int *dimensione){
+int* aggiungiElemento(int* vettore, int *dimensione){
     *dimensione=*dimensione+1;
     vettore = (int*)realloc(vettore, (*dimensione)*sizeof(int));
+    if(vettore == NULL){
+        fprintf(stderr, "Errore");
+        exit(1);
+    }
     printf("Inserisci numero: ");
     scanf("%d", &vettore[*dimensione-1]);
+    return vettore;
 }
 
-void aggiungiElementi(int* vettore, int *dimensione){
+int* aggiungiElementi(int* vettore, int *dimensione){
     int vecchiaDimensione = (*dimensione);
     int n = 0;
     printf("Quanti numeri vuoi inserire? ");
     scanf("%d", &n);
     *dimensione=(*dimensione)+n;
     vettore = (int*)realloc(vettore, (*dimensione)*sizeof(int));
+    if(vettore == NULL){
+        fprintf(stderr, "Errore");
+        exit(1);
+    }
     for(int i=vecchiaDimensione; i<(*dimensione); i++){
         printf("Iserisci %d° numero: ", i-vecchiaDimensione+1);
         scanf("%d", &vettore[i]);
     }
+    return vettore;
 }
 
-void rimuoviElementoInCoda(int* vettore, int *dimensione){
+int* rimuoviElementoInCoda(int* vettore, int *dimensione){
     *dimensione = (*dimensione)-1;
     vettore = (int*)realloc(vettore, (*dimensione)*sizeof(int));
+    if(vettore == NULL){
+        fprintf(stderr, "Errore");
+        exit(1);
+    }
+    return vettore;
 }
 
 int main(){
@@ -51,15 +66,15 @@ int main(){
         printf("0) Esci\n");
         printf("comando atteso: ");
         scanf("%d", &comando);
-        if(comando==1)
-            aggiungiElemento(vettore, &dimensione);
-        else if(comando==2)
-            aggiungiElementi(vettore, &dimensione);
-        else if(comando==3)
-            rimuoviElementoInCoda(vettore, &dimensione);
-        else if(comando==4)
+        if(comando == 1)
+            vettore = aggiungiElemento(vettore, &dimensione);
+        else if(comando == 2)
+            vettore = aggiungiElementi(vettore, &dimensione);
+        else if(comando == 3)
+            vettore = rimuoviElementoInCoda(vettore, &dimensione);
+        else if(comando == 4)
             stampa(vettore, dimensione);
-    }while(comando!=0);
+    }while(comando != 0);
 
     free(vettore);
     printf("Memoria liberata.\n");
