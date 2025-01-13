@@ -26,7 +26,7 @@ int main(){
     } else if(pid==0){
         printf("[figlio] Stampa del valore di x: %d\n", x);
     } else if(pid<0){
-        fprintf(stderr, "E mo sono cacchi amari\n");
+        fprintf(stderr, "Errore fork\n");
         exit(1);
     }
 
