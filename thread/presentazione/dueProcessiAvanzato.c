@@ -5,6 +5,14 @@
 #include <sys/wait.h>
 
 #define NUM_THREADS 2
+#define RESET   "\033[0m"  // Reset del colore
+#define RED     "\033[31m" // Rosso
+#define GREEN   "\033[32m" // Verde
+#define YELLOW  "\033[33m" // Giallo
+#define BLUE    "\033[34m" // Blu
+#define MAGENTA "\033[35m" // Magenta
+#define CYAN    "\033[36m" // Ciano
+#define WHITE   "\033[37m" // Bianco
 
 // Funzione che verrà eseguita dai thread
 void* creazioneThread(void* arg) {
@@ -14,24 +22,24 @@ void* creazioneThread(void* arg) {
     pthread_t thread_id = pthread_self(); // Ottiene l'ID del thread corrente
     if(pid>0){
         //wait(NULL);
-        printf("[PID %d] [TID %lu] Sono il genitore e inizo a lavorare\n", getpid(), (unsigned long)thread_id);
+        printf(GREEN "[PID %d] [TID %lu] Sono il genitore e inizo a lavorare\n", getpid(), (unsigned long)thread_id);
         for(int i=0; i<3; i++){
-            printf("[PID %d] [TID %lu] Sono il genitore e sto lavorando\n", getpid(), (unsigned long)thread_id);
+            printf(YELLOW "[PID %d] [TID %lu] Sono il genitore e sto lavorando\n", getpid(), (unsigned long)thread_id);
             for(int j=0; j<1000; j++)
                 for(int j=0; j<1000; j++)
                     genitore++;
         }
-        printf("[PID %d] [TID %lu] Sono il genitore finito di lavorare\n", getpid(), (unsigned long)thread_id);
+        printf(RED "[PID %d] [TID %lu] Sono il genitore finito di lavorare\n", getpid(), (unsigned long)thread_id);
     }
     else if(pid==0){
-        printf("[PID %d] [TID %lu] Sono il figlio e inizo a lavorare\n", getpid(), (unsigned long)thread_id);
+        printf(GREEN "[PID %d] [TID %lu] Sono il figlio e inizo a lavorare\n", getpid(), (unsigned long)thread_id);
         for(int i=0; i<3; i++){
-            printf("[PID %d] [TID %lu] Sono il figlio e sto lavorando\n", getpid(), (unsigned long)thread_id);
+            printf(YELLOW "[PID %d] [TID %lu] Sono il figlio e sto lavorando\n", getpid(), (unsigned long)thread_id);
             for(int j=0; j<1000; j++)
                 for(int j=0; j<1000; j++)
                     figlio++;
         }
-        printf("[PID %d] [TID %lu] Sono il figlio finito di lavorare\n", getpid(), (unsigned long)thread_id);
+        printf(RED "[PID %d] [TID %lu] Sono il figlio finito di lavorare\n", getpid(), (unsigned long)thread_id);
     }
     return NULL;
 }
@@ -39,7 +47,7 @@ void* creazioneThread(void* arg) {
 int main() {
 
     printf("Programma che crea due processi che sfruttano una funzione\n");
-    printf("per creare tre thread ciasuno\n\n");
+    printf("per creare tre thread ciascuno.\n\n");
 
     int pid = fork();
     pthread_t threads[NUM_THREADS]; // Array per memorizzare gli ID dei thread

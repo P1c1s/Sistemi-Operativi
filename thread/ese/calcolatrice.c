@@ -4,7 +4,6 @@
 #include <pthread.h>
 #include <math.h>
 
-
 #define DIM 10
 #define RESET   "\033[0m"  // Reset del colore
 #define RED     "\033[31m" // Rosso
