@@ -17,9 +17,8 @@ void* creazioneThread(void* arg) {
 }
 
 int main() {
-
     printf("Programma che crea due processi che sfruttano una funzione\n");
-    printf("per creare tre thread ciasuno\n\n");
+    printf("per creare tre thread ciascuno\n\n");
 
     int pid = fork();
     pthread_t threads[NUM_THREADS]; // Array per memorizzare gli ID dei thread
