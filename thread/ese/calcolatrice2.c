@@ -42,7 +42,7 @@ void* divisione(void* arg){
 
 int main(){
 
-    printf("Programma che esegue dei calcoli in parallelo.\n\n");
+    printf("Programma che esegue dei calcoli in parallelo ed in serie.\n\n");
     
     struct timeval start, end;
 
@@ -70,7 +70,7 @@ int main(){
     // Fine del tempo
     gettimeofday(&end, NULL);
     double time_taken = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
-    printf("Tempo di esecuzione: %f secondi\n", time_taken);
+    printf("[CON THREADS] Tempo di esecuzione: %f secondi\n", time_taken);
 
     /* CALCOLO NON PARALLELO*/
     
@@ -92,7 +92,7 @@ int main(){
     // Fine del tempo
     gettimeofday(&end, NULL);
     time_taken = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
-    printf("Tempo di esecuzione: %f secondi\n", time_taken);
+    printf("[SENZA THREADS] Tempo di esecuzione: %f secondi\n", time_taken);
 
     return 0;
 }
