@@ -14,19 +14,19 @@
 
 void *stampaThreadUno(){
     while(1){
-        printf(RED "A\n");
+        printf(RED "A\n" RESET);
     }
 }
 
 void *stampaThreadDue(){
     while(1){
-        printf(GREEN "B\n");
+        printf(GREEN "B\n" RESET);
     }
 }
 
 void *stampaThreadTre(){
     while(1){
-        printf(BLUE "C\n");
+        printf(BLUE "C\n" RESET);
     }
 }
 
