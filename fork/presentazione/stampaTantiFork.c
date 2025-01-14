@@ -13,7 +13,7 @@ int main() {
     pid = fork();    
 
     if(pid>0)
-        printf("[PID %d] Sono un processo gentiore che ha creato il processo figlio %d\n", getpid(), pid); 
+        printf("[PID %d] Sono un processo genitore che ha creato il processo figlio %d\n", getpid(), pid); 
     else if(pid==0)
         printf("[PID %d] Sono un processo dal figlio generato dal processo %d\n", getpid(), getppid()); 
 
