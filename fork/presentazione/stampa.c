@@ -9,9 +9,10 @@ int main(){
     printf("----------------------------\n");
     printf("|  num  |     genitore     |\n");
     printf("|   0   |      figlio      |\n\n");
+    printf("|   -1  |      errore      |\n\n");
 
     int pid = fork();
-    printf("[PID %d] \n\n", pid);
+    printf("[PID %d] \n", pid);
 
     return 0;
 }
