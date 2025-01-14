@@ -9,7 +9,7 @@ int main(){
     int intero = 1;
     float decimale = 32.34;
     char carattere = 'a';
-    char stringa[10] = "stringa";
+    char stringa[7] = "stringa";
 
     //Puntatori
     int* puntatoreIntero = &intero;
