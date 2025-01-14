@@ -24,6 +24,15 @@ void stampa(nodo* testa){
     }
 }
 
+void dealloca(nodo* testa){
+    nodo* n = testa;
+    printf("---------------------------------------------\n");
+    while(testa != NULL){
+        n = testa;
+        testa = testa->next;
+        free(n);
+    }
+}
 
 int main(){
 
@@ -35,6 +44,7 @@ int main(){
     for(int i=0; i<10; i++)
         testa = aggiungiNodo(testa);
     stampa(testa);
+    dealloca(testa);
 
     return 0;
     
