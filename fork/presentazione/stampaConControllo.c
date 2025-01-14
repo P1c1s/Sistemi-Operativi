@@ -12,7 +12,7 @@ int main(){
     } else if(pid==0){
         printf("[figlio] Stampo %d perche' tutto e' andato bene\n", pid);
     } else if(pid<0){
-        fprintf(stderr, "Errore, qualocsa e' andato storto\n");
+        fprintf(stderr, "Errore, qualcosa e' andato storto\n");
         exit(1);
     }
 

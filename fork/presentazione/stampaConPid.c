@@ -4,7 +4,7 @@
 
 int main(){
 
-    printf("Programma che stampa il pid del processo.\n");
+    printf("Programma che stampa il pid del processo.\n\n");
 
     int pid = fork();
 
