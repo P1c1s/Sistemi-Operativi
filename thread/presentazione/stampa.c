@@ -12,8 +12,8 @@ void* creazioneThread(void* arg){
     int* ordineLancio = (int*) arg;
     pthread_mutex_lock(&mutex); // Acquisisce il mutex
     contatore++;
-    pthread_mutex_unlock(&mutex); // Rilascia il mutex
     printf("[PID %d] %d° thread avviato che ha modificato il contatore in comune a %d\n", getpid(), *ordineLancio, contatore);
+    pthread_mutex_unlock(&mutex); // Rilascia il mutex
     return NULL;
 }
 
@@ -26,13 +26,13 @@ int main() {
     pthread_mutex_init(&mutex, NULL); // Inizializza il mutex
 
     // Creazione dei thread
-    for (int i=0; i<NUM_THREADS; i++){
+    for(int i=0; i<NUM_THREADS; i++){
         posizioni[i] = i+1;
         pthread_create(&threads[i], NULL, creazioneThread, (void*)&posizioni[i]);
     }
 
     // Attesa della terminazione dei thread
-    for (int i=0; i<NUM_THREADS; i++){
+    for(int i=0; i<NUM_THREADS; i++){
         pthread_join(threads[i], NULL);
     }
 
