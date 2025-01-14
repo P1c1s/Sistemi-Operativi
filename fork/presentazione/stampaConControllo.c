@@ -4,7 +4,7 @@
 
 int main(){
 
-    printf("Programma che in base al processo genitore/figlio stampa una cosa diversa.\n");
+    printf("Programma che in base al processo genitore/figlio stampa una cosa diversa.\n\n");
     int pid = fork();
 
     if(pid>0){
