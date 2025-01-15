@@ -40,38 +40,48 @@ void stampa(Rubrica r){
 
 void salvataggio(Rubrica r){
     int fd = open("rubrica.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+    if(fd == -1){
+        fprintf(stderr, "Errore apertura file per la scrittura");
+        exit(1);
+    }
     for(int i=0; i<r.indice; i++){
         if(write(fd, r.contatti[i].nome, 30*sizeof(char)) == -1){
-            fprintf(stderr, "Errore scrittura nome");
+            fprintf(stderr, "Errore scrittura persona %d", i);
+            close(fd);
             exit(1);
         }
-        if(write(fd, r.contatti[i].cognome, 30*sizeof(char)) == -1){
-            fprintf(stderr, "Errore scrittura nome");
+	if(write(fd, r.contatti[i].cognome, 30*sizeof(char)) == -1){
+            fprintf(stderr, "Errore scrittura cognome");
+            close(fd);
             exit(1);
         }
-        if(write(fd, r.contatti[i].numero, 10*sizeof(char)) == -1){
-            fprintf(stderr, "Errore scrittura nome");
+	if(write(fd, r.contatti[i].numero, 10*sizeof(char)) == -1){
+            fprintf(stderr, "Errore scrittura numero");
+            close(fd);
             exit(1);
         }
     }
     close(fd);
 }
 
-void caricamento(Rubrica* r){
-    int fd = open("rubrica.txt", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-    char a[30];
+void caricamento(Rubrica *r) {
+    int fd = open("rubrica.txt", O_RDONLY);
+    if (fd == -1) {
+        perror("Errore nell'apertura del file per lettura");
+        exit(1);
+    }
+    r->indice = 0; // Resetta l'indice
+    while(read(fd, &r->contatti[r->indice], sizeof(Persona)) > 0) {
+        r->indice++;
+        if (r->indice >= DIM) {
+            printf("Rubrica piena, non possono essere caricati ulteriori contatti.\n");
+            break;
+        }
+    }
 
-    // while(read(fd, a, sizeof(buffer) - 1) > 0){
-    //     buffer[bytes_read] = '\0'; // Aggiungi un terminatore di stringa
-    //     printf("%s", buffer); // Stampa i dati letti
-    // }
-
-    read(fd, &r->contatti[0].nome, 30*sizeof(char));
-    read(fd, &r->contatti[0].cognome, 30*sizeof(char));
-    read(fd, &r->contatti[0].numero, 10*sizeof(char));
-    r->indice =+ 1;
+    printf("\nCaricati %d contatti.\n", r->indice);
+    
     close(fd);
-
 }
 
 int main(){
@@ -81,7 +91,7 @@ int main(){
     int comando;
 
     do{
-        printf("\n\n-------------Menu'-----------\n");   
+       	printf("\n\n-------------Menu'-----------\n");   
         printf("1) Inserimento nuovo contatto\n");
         printf("2) Stampa\n");
         printf("3) Salvataggio su file\n");
@@ -98,25 +108,6 @@ int main(){
         else if(comando == 4)
             caricamento(&rubrica);
     }while(comando != 0);
-
-
-    // if(fd == -1){
-    //     fprintf(stderr, "Errore apertura files\n");
-    //     exit(1);
-    // }
-
-    // for(int i=0; i<DIM; i++)
-    //     printf("%d", vettore[i]);
-
-    // for(int i=0; i<DIM; i++){
-    //     itoa(vettore[i], carattere, 10);
-    //     scrittura = write(fd, carattere, sizeof(int));
-    // }
-    
-    // if (close(fd) == -1) {
-    //     perror("Error closing file");
-    //     return 1;
-    // }
 
     return 0;
 
