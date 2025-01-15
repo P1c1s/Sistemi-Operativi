@@ -35,7 +35,8 @@ void dealloca(nodo* testa){
 
 int main(){
 
-    printf("Programma che stampa gli indirizzi non adiacenti di memoria.\n\n");
+    printf("Programma che stampa gli indirizzi di memoria di una struttura dati lista.\n");
+    printf("[Nota] Sono indirizzi di memoria non adiacenti ma casuali.\n\n");
 
     nodo* testa = (nodo*)malloc(sizeof(nodo));
     testa = NULL;

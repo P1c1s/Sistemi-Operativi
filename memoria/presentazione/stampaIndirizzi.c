@@ -8,8 +8,8 @@ int main(){
     //Variabili
     int intero = 1;
     float decimale = 32.34;
-    char carattere = 'a';
-    char stringa[7] = "stringa";
+    char carattere = 'Q';
+    char stringa[10] = "stringa\0";
 
     //Puntatori
     int* puntatoreIntero = &intero;
@@ -17,14 +17,14 @@ int main(){
     char* puntatoreCarattere = &carattere;
     char* puntatoreStringa = stringa;
 
-    printf("[%p] %d\n", &intero, intero);
-    printf("[%p] %f\n", &decimale, decimale);
-    printf("[%p] %c\n", &carattere, carattere);
-    printf("[%p] %s\n", &stringa, stringa);
-    printf("[%p] puntatore alla cella %p a intero %d\n", &puntatoreIntero, &(*puntatoreIntero), *puntatoreIntero);
-    printf("[%p] puntatore alla cella %p a float %f\n", &puntatoreDecimale, &(*puntatoreDecimale), *puntatoreDecimale);
-    printf("[%p] puntatore alla cella %p a carattere %c\n", &puntatoreCarattere, &(*puntatoreCarattere), *puntatoreCarattere);
-    printf("[%p] puntatore a stringa %p a stringa %s\n", &puntatoreStringa, &(*puntatoreCarattere), *puntatoreStringa);
+    printf("[%p] Intero con valore %d\n", &intero, intero);
+    printf("[%p] Float con valore %f\n", &decimale, decimale);
+    printf("[%p] Carattere con valore %c\n", &carattere, carattere);
+    printf("[%p] Stringa con valore %s\n", &stringa, stringa);
+    printf("[%p] Puntatore a indirizzo %p a intero %d\n", &puntatoreIntero, &(*puntatoreIntero), *puntatoreIntero);
+    printf("[%p] Puntatore a indirizzo %p a float %f\n", &puntatoreDecimale, &(*puntatoreDecimale), *puntatoreDecimale);
+    printf("[%p] Puntatore a indirizzo %p a carattere %c\n", &puntatoreCarattere, &(*puntatoreCarattere), *puntatoreCarattere);
+    printf("[%p] Puntatore a indirizzo %p a stringa %s\n", &puntatoreStringa, &(*puntatoreCarattere), *puntatoreStringa);
 
     return 0;
     

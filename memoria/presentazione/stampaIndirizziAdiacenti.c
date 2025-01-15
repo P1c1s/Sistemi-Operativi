@@ -3,7 +3,8 @@
 
 int main(){
 
-    printf("Programma che stampa gli indirizzi adiacenti di memoria.\n\n");
+    printf("Programma che stampa gli indirizzi delle celle di un vettore di caratteri.\n");
+    printf("[Nota] Sono indirizzi di memoria adiacenti.\n\n");
 
     char stringa[7] = "stringa";
 
