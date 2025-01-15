@@ -27,7 +27,7 @@ int main(){
         scrittura = write(fd, "\n\n", sizeof("\n\n"));
     }
 
-    int pid = fork();
+    pid_t pid = fork();
 
     if(pid>0){
         char messaggio[] = "[genitore] Sto scrivendo nel file.\n";

@@ -5,7 +5,7 @@
 
 int main() {
 
-    int pid = fork();
+    pid_t pid = fork();
     
     if(pid>0){
         wait(NULL);

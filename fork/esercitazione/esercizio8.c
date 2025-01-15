@@ -15,7 +15,7 @@ int main(){
         exit(1);
     }
 
-    int pid = fork();
+    pid_t pid = fork();
 
     if(pid==0){
         write(pipefd[1], "Ciao genitore, come stai?", sizeof("Ciao genitore, come stai?")); // Scrive "Messaggio" nella pipe

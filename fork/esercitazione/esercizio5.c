@@ -7,7 +7,7 @@ int main(){
 
     printf("Programma dove il genitore aspetta il figlio.\n\n");
     
-    int pid = fork();
+    pid_t pid = fork();
 
     if(pid>0){
         wait(NULL);

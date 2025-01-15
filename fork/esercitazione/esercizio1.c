@@ -8,7 +8,7 @@ int main(){
     printf("il suo incremento che avviene dopo la fork.\n\n");
     
     int x = 100;
-    int pid = fork();
+    pid_t pid = fork();
 
     if(pid>0){
         printf("[genitore] Stampa del valore di x: %d\n", x);

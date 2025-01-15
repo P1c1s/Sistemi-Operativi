@@ -9,7 +9,7 @@ int main() {
     printf("Programma che crea un figlio che chiude lo standard outpt\n");
     printf("e sfrutta lo standard error.\n\n");
 
-    int pid = fork();
+    pid_t pid = fork();
 
     if(pid==0){
         close(STDOUT_FILENO); //Chiude standard output
