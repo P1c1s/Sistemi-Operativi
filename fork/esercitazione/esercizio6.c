@@ -8,8 +8,8 @@ int main(){
     printf("Programma dove i genitori aspettano i loro figli.\n\n");
     
     pid_t pid = fork();
-    pid_t = fork();
-    pid_t = fork();
+    pid = fork();
+    pid = fork();
 
     if(pid>0){
         waitpid(pid, NULL, 0);
