@@ -67,8 +67,8 @@
     - `pthread_self()` funzione che restituisce l'id del thread
     - mutua :)
         1. `pthread_mutex_t mutex` un mutex è un meccanismo di sincronizzazione che consente di controllare l'accesso a una risorsa condivisa da parte di più thread, evitando condizioni di gara
-        2. `pthread_mutex_init()` funzione che inizializza un mutex in un programma multithread
+        2. `pthread_mutex_init(&mutex, NULL)` funzione che inizializza un mutex in un programma multithread
         3. `pthread_mutex_lock(&mutex)` funzione che acquisisce il mutex
         4. `pthread_mutex_unlock(&mutex)` funzione che libera il mutex
-        5. `pthread_mutex_destroy()` funzione che distruggere un mutex precedentemente inizializzato con pthread_mutex_init(). È importante chiamare questa funzione quando il mutex non è più necessario, per liberare le risorse associate ad esso
+        5. `pthread_mutex_destroy(&mutex)` funzione che distruggere un mutex precedentemente inizializzato con pthread_mutex_init(). È importante chiamare questa funzione quando il mutex non è più necessario, per liberare le risorse associate ad esso
 ### Programmi
