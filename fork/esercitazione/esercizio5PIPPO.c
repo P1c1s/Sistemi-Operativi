@@ -23,7 +23,7 @@ int main(){
         exit(1);
     }
 
-    //prima il padre poi il figlio
+    //prima il padre poi il figlio (decommenta questa parte e commenta quella sopra)
 
     // if(pid>0){
     //     printf("Sono il genitore e stavolta prima tocca a me\n");
