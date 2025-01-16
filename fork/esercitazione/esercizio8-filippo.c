@@ -20,8 +20,10 @@ int main(){
     pid_t pid = fork();
 
     if(pid>0){
-        //il padre aspetta che il figlio gli madndi il messaggio
+        //il padre aspetta che il figlio gli mandi il messaggio
+        printf("s1 g");
         wait(NULL);
+        printf("s2 g");
         char bufferF[100];
         //lettura dalla pipe del messaggio del figlio
         read(pipefd[0], bufferF, sizeof(bufferF));
@@ -42,7 +44,9 @@ int main(){
             exit(1);
         }
 
+        printf("s1 f\n");
         waitpid(getppid(), NULL, 0);
+        printf("s2 f\n");
 
         char bufferP[100];
         read(pipefd[0], bufferP, sizeof(bufferP));
