@@ -26,6 +26,8 @@ pthread_mutex_t mutex;
 
 int main(){
     pthread_t prod, cons;
+    pthread_mutex_init(&mutex, NULL);
+
     printf("\n");
     srand(time(NULL));
 
