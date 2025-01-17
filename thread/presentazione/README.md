@@ -10,3 +10,5 @@ Questa cartella contiene alcuni esempi pratici - riguardo i thread - finalizzati
 
 - __dueProcessiAvanzato.c:__ Programma che crea n thread sempre nello stesso processo che sfruttano una varibile condivisa come contatore.
 
+-__ogniProcessoUnThread.c:__Programma che stampa un thread con il suo ID per ognuno dei due processi.
+
