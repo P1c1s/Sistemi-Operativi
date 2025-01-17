@@ -11,7 +11,6 @@
 - `fprintf(stderr, "testo")` usato per mandare sul error stream un messaggio di errore
 
 ## Files
-### Sintassi  
 - `#include <fcntl.h>` libreria usata per la la gestione dei files
     - `open(percorso, flags, mode)` funzione che apre un file e restuisce un file descriptor oppure -1 in caso di errore.
         - percorso:  Il percorso del file che si desidera aprire
@@ -26,10 +25,8 @@
     - `#include <unistd.h>` libreria usata anche per la gestione dei files
     -   `write(fileDescriptor, buffer, sizeof(...))` funzione che scrive su un file che è stato precedentente aperto e in caso di errore restituisce -1
     - `close(fileDescriptor)` funzione che chiude un file precedentemente aperto e in caso di errore restituisce -1
-### Programmi
 
 ## Memoria
-### Sintassi 
 - `#include <stdlib.h>` libreria usata per la gestione della memoria
     - `malloc(sizeof(...))` funzione che alloca in runtime un blocco di memoria di uan specifica dimensione la memoria non è inizializzata a zero
     - `calloc(num, sizeof())` funzione che alloca in runtime un blocco di memoria di uan specifica dimensione la memoria è inizializzata a zero
@@ -42,10 +39,7 @@
     - `mmap()`
     - `munmap`  
 
-### Programmi
-
 ## Fork
-### Sintassi 
 - `#include <unistd.h>` libreria usata per la creazione e la gestione dei processi oppure per l'esecuzione di comandi della console
     - `fork()` funzione che crea un processo che restituisce un intero pari al pid del processo creato
     - `getpid()` funzione che restituisce un intero pari al pid del processo corrente
@@ -57,10 +51,8 @@
 - `#include <sys/wait.h>` per la gestione dei processi
     - `wait(NULL|&pid)` funzione che attende la terminazione di ogni processo figlio
     - `waitpid(pidDaAspettare, NULL)` funzione che attende la terminazione del processo con pid passato come argomento
-### Programmi
 
 ## Thread
-### Sintassi 
 - `#include <pthread.h>` libreria usata per la creazione e la gestione dei processi
     - `pthread_create(&threads[i], NULL, creazioneThread, (void*)&pid)` funzione che crea un nuovo thread e restituisce 0 se l'operazione va buon fine
     - `pthread_join(threads[i], NULL)` funzione che permette al processo principale di attendere la termianzione dei thread 
@@ -71,4 +63,3 @@
         3. `pthread_mutex_lock(&mutex)` funzione che acquisisce il mutex
         4. `pthread_mutex_unlock(&mutex)` funzione che libera il mutex
         5. `pthread_mutex_destroy(&mutex)` funzione che distruggere un mutex precedentemente inizializzato con pthread_mutex_init(). È importante chiamare questa funzione quando il mutex non è più necessario, per liberare le risorse associate ad esso
-### Programmi
