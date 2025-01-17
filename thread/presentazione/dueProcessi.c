@@ -17,24 +17,24 @@ void* creazioneThread(void* arg) {
 }
 
 int main() {
-    printf("Programma che crea due processi che sfruttano una funzione\n");
-    printf("per creare tre thread ciascuno\n\n");
 
-    int pid = fork();
+    printf("Programma che crea due processi che sfruttano una funzione\n");
+    printf("per creare tre thread ciascuno.\n\n");
+
+    pid_t pid = fork();
     pthread_t threads[NUM_THREADS]; // Array per memorizzare gli ID dei thread
 
     // Creazione dei thread
-    for (int i = 0; i < NUM_THREADS; i++) {
-        if (pthread_create(&threads[i], NULL, creazioneThread, (void*)&pid) != 0) {
+    for(int i=0; i < NUM_THREADS; i++){
+        if(pthread_create(&threads[i], NULL, creazioneThread, (void*)&pid) != 0) {
             fprintf(stderr, "pthread_create");
             exit(1);
         }
     }
 
     // Attesa della terminazione dei thread
-    for (int i = 0; i < NUM_THREADS; i++) {
+    for(int i = 0; i < NUM_THREADS; i++)
         pthread_join(threads[i], NULL);
-    }
 
     //printf("Tutti i thread sono terminati.\n");
     return 0;

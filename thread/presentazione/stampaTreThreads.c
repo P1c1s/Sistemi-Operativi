@@ -12,19 +12,19 @@
 #define CYAN    "\033[36m" // Ciano
 #define WHITE   "\033[37m" // Bianco
 
-void* stampaThreadUno(){
+void* stampaThreadUno(void* arg){
     while(1){
         printf(RED "A\n" RESET);
     }
 }
 
-void* stampaThreadDue(){
+void* stampaThreadDue(void* arg){
     while(1){
         printf(GREEN "B\n" RESET);
     }
 }
 
-void* stampaThreadTre(){
+void* stampaThreadTre(void* arg){
     while(1){
         printf(BLUE "C\n" RESET);
     }

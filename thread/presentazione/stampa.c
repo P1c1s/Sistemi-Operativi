@@ -33,9 +33,8 @@ int main() {
     }
 
     // Attesa della terminazione dei thread
-    for(int i=0; i<NUM_THREADS; i++){
+    for(int i=0; i<NUM_THREADS; i++)
         pthread_join(threads[i], NULL);
-    }
 
     printf("\nEseguiti %d thread del processo %d\n", contatore, getpid());
     pthread_mutex_destroy(&mutex); // Distrugge il mutex

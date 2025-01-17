@@ -14,30 +14,28 @@
 #define CYAN    "\033[36m" // Ciano
 #define WHITE   "\033[37m" // Bianco
 
+pthread_mutex_t mutex;
+
 // Funzione che verrà eseguita dai thread
 void* creazioneThread(void* arg) {
-    int genitore = 0;
-    int figlio = 0;
-    int pid = *((int*)arg); // Cast dell'argomento a un intero
+    pid_t pid = *((int*)arg); // Cast dell'argomento a un intero
     pthread_t thread_id = pthread_self(); // Ottiene l'ID del thread corrente
     if(pid>0){
-        //wait(NULL);
         printf(GREEN "[PID %d] [TID %lu] Sono il genitore e inizo a lavorare\n" RESET, getpid(), (unsigned long)thread_id);
+        usleep(10000*(rand()%100));
         for(int i=0; i<3; i++){
             printf(YELLOW "[PID %d] [TID %lu] Sono il genitore e sto lavorando\n" RESET, getpid(), (unsigned long)thread_id);
-            for(int j=0; j<1000; j++)
-                for(int j=0; j<1000; j++)
-                    genitore++;
+            usleep(10000*(rand()%100));
         }
         printf(RED "[PID %d] [TID %lu] Sono il genitore finito di lavorare\n" RESET, getpid(), (unsigned long)thread_id);
+        usleep(10000*(rand()%100));
     }
     else if(pid==0){
         printf(GREEN "[PID %d] [TID %lu] Sono il figlio e inizo a lavorare\n" RESET, getpid(), (unsigned long)thread_id);
+        usleep(10000*(rand()%100));
         for(int i=0; i<3; i++){
             printf(YELLOW "[PID %d] [TID %lu] Sono il figlio e sto lavorando\n" RESET, getpid(), (unsigned long)thread_id);
-            for(int j=0; j<1000; j++)
-                for(int j=0; j<1000; j++)
-                    figlio++;
+            usleep(10000*(rand()%100));
         }
         printf(RED "[PID %d] [TID %lu] Sono il figlio finito di lavorare\n" RESET, getpid(), (unsigned long)thread_id);
     }
@@ -49,21 +47,24 @@ int main() {
     printf("Programma che crea due processi che sfruttano una funzione\n");
     printf("per creare tre thread ciascuno.\n\n");
 
-    int pid = fork();
+    pthread_mutex_init(&mutex, NULL);
+
+    pid_t pid = fork();
     pthread_t threads[NUM_THREADS]; // Array per memorizzare gli ID dei thread
 
     // Creazione dei thread
-    for (int i = 0; i < NUM_THREADS; i++) {
+    for(int i=0; i<NUM_THREADS; i++){
         if (pthread_create(&threads[i], NULL, creazioneThread, (void*)&pid) != 0) {
-            perror("pthread_create");
+            fprintf(stderr, "Errore creazione thread");
             exit(1);
         }
     }
 
     // Attesa della terminazione dei thread
-    for (int i = 0; i < NUM_THREADS; i++) {
+    for(int i=0; i<NUM_THREADS; i++)
         pthread_join(threads[i], NULL);
-    }
+
+    pthread_mutex_destroy(&mutex);
 
     return 0;
 }
