@@ -65,9 +65,11 @@ void* consjob(void* argc){
         printf("[TI %ld] : job processato\n", job->id);
         double tempo = (job->end.tv_sec - job->start.tv_sec) + (job->end.tv_usec - job->start.tv_usec) / 1000000.0;
         printf("Tempo: %f\n", tempo);
+
+        pthread_mutex_unlock(&mutex);
+        usleep((rand()%100) * 1000);
     }
-    pthread_mutex_unlock(&mutex);
-    sleep(1);
+    
     return NULL;
 }
 
