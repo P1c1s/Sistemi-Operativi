@@ -4,14 +4,15 @@
 
 int main(){
 
-    printf("Programma che in base al processo genitore/figlio stampa una cosa diversa.\n\n");
+    printf("Programma in cui il processo genitore stampa il pid del figlio - ottenuto tramite la fork() -\n");
+    printf("e il processo figlio stampa 0 qualora il fork() sia andato buon fine.\n\n");
     printf("|  PID  | tipo di processo |\n");
     printf("----------------------------\n");
-    printf("|  num  |     genitore     |\n");
-    printf("|   0   |      figlio      |\n\n");
-    printf("|   -1  |      errore      |\n\n");
+    printf("|   n   |     genitore     |\n");
+    printf("|   0   |      figlio      |\n");
+    printf("|  -1   |      errore      |\n\n");
 
-    int pid = fork();
+    pid_t pid = fork();
     printf("[PID %d] \n", pid);
 
     return 0;
