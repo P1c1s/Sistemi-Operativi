@@ -12,19 +12,19 @@
 #define CYAN    "\033[36m" // Ciano
 #define WHITE   "\033[37m" // Bianco
 
-void *stampaThreadUno(){
+void* stampaThreadUno(){
     while(1){
         printf(RED "A\n" RESET);
     }
 }
 
-void *stampaThreadDue(){
+void* stampaThreadDue(){
     while(1){
         printf(GREEN "B\n" RESET);
     }
 }
 
-void *stampaThreadTre(){
+void* stampaThreadTre(){
     while(1){
         printf(BLUE "C\n" RESET);
     }
@@ -34,6 +34,8 @@ int main(){
 
     printf("Programma che sfrutta tre threads che stampano ognuno una lettera diversa.\n");
     printf("Notare il flusso della stampa ...\n\n");
+
+    sleep(4);
 
     pthread_t threadUno;
     pthread_t threadDue;

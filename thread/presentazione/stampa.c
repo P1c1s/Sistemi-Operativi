@@ -18,7 +18,8 @@ void* creazioneThread(void* arg){
 }
 
 int main() {
-    printf("Programma che crea N thread sempre nello stesso processo\n");
+
+    printf("Programma che crea n thread sempre nello stesso processo\n");
     printf("che sfruttano una varibile condivisa come contatore.\n\n");
 
     int posizioni[NUM_THREADS];
