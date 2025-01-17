@@ -5,10 +5,14 @@
 int main(){
 
     printf("Programma che in base al processo genitore/figlio stampa una cosa diversa.\n\n");
-    int pid = fork();
+    printf("Programma in cui il processo genitore stampa il pid del figlio - ottenuto tramite la fork() -\n");
+    printf("e il processo figlio stampa 0 qualora il fork() sia andato buon fine.\n");
+    printf("I due processi hanno un messaggio personalizzato grazie al controllo del pid.\n\n");
+
+    pid_t pid = fork();
 
     if(pid>0){
-        printf("[genitore] Stampo il pid di mio figlio -> %d\n", pid);
+        printf("[genitore] Stampo %d ovvero il pid di mio figlio\n", pid);
     } else if(pid==0){
         printf("[figlio] Stampo %d perche' tutto e' andato bene\n", pid);
     } else if(pid<0){
