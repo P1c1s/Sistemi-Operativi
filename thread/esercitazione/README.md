@@ -61,3 +61,16 @@ Scrivere un simulatore che implementi il comportamento dello scenario descritto 
 
 - Numero delle CPU: il computer in considerazione può avere 1, 2, 4 CPU.
 
+Si suggerisce di utilizzare come base di partenza l’implementazione del produttore-consumatore. La struttura dati rappresentante la coda di processi è disponibile nel file queue.h.
+
+Suggerimenti su queue.h:
+
+Prendere familiarità con le strutture dati definite in queue.h, in particolare con la struct Process. Quest’ultima può essere utilizzata per memorizzare informazioni utili quali l’ID del processo, il suo tempo di esecuzione, il tempo di arrivo all’interno del sistema, il tempo di avvio ed il tempo di completamento. Questa struct Process è utilizzata per costruire una lista bidirezionale che può essere acceduta con diverse funzioni, tra le quali: enqueue(Queue* queue, Process* data) e dequeue(Queue* queue): la prima aggiunge un processo in coda alla lista, la seconda rimuove e restituisce il processo in testa alla lista. Per poter inizializzare la coda è necessario utilizzare la funzione initializeQueue(Queue* queue).
+
+Suggerimenti sulla simulazione:
+
+E’ possibile implementare la simulazione estendendo il problema del produttore-consumatore, in particolare:
+
+- Il thread produttore può essere implementato in modo tale da generare processi alla velocità indicata in precedenza
+
+- Il thread consumatore può rappresentare una CPU che estrae un processo dalla coda e lo esegue.
