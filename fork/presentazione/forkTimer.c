@@ -9,6 +9,7 @@ int main() {
 
     printf("Programma che crea più processi figli che contano fino a un numero specificato,\n");
     printf("ogni processo figlio stampa il proprio PID e il numero che sta contando.\n\n");
+    
     pid_t pids[NUM_CHILDREN];
 
     for(int i=0; i<NUM_CHILDREN; i++){
