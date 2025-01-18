@@ -38,8 +38,8 @@ int main(){
     pthread_create(&esec, NULL, consjob, NULL);
 
     while(1){
-        stats();
         sleep(2);
+        stats();
     }
 
     pthread_join(proc, NULL);
