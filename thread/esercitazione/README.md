@@ -74,3 +74,12 @@ E’ possibile implementare la simulazione estendendo il problema del produttore
 - Il thread produttore può essere implementato in modo tale da generare processi alla velocità indicata in precedenza
 
 - Il thread consumatore può rappresentare una CPU che estrae un processo dalla coda e lo esegue.
+
+#### Esercizio 4
+Da Wikipedia (https://it.wikipedia.org/wiki/Problema_dei_filosofi_a_cena):
+
+Cinque filosofi siedono ad una tavola rotonda con un piatto di spaghetti davanti e una forchetta a sinistra. Ci sono dunque cinque filosofi, cinque piatti di spaghetti e cinque forchette.
+
+Si immagini che la vita di un filosofo consista di periodi alterni di mangiare e pensare, e che ciascun filosofo abbia bisogno di due forchette per mangiare, ma che le forchette vengano prese una per volta. Dopo essere riuscito a prendere due forchette il filosofo mangia per un po', poi lascia le forchette e ricomincia a pensare. Il problema consiste nello sviluppo di un algoritmo che impedisca lo stallo (deadlock) o la morte d'inedia (starvation). Il deadlock può verificarsi se ciascuno dei filosofi tiene in mano una forchetta senza mai riuscire a prendere l'altra. Il filosofo F1 aspetta di prendere la forchetta che ha in mano il filosofo F2, che aspetta la forchetta che ha in mano il filosofo F3, e così via in un circolo vizioso. La situazione di starvation può verificarsi indipendentemente dal deadlock se uno dei filosofi non riesce mai a prendere entrambe le forchette.
+
+Implementare un programma basato sulla libreria pthread dove i cinque filosofi sono realizzati tramite 5 thread, e si cerchi di evitare situazioni di deadlock e starvation. Su Wikipedia è presente anche una possibile soluzione, ma vi chiedo di leggerla soltanto dopo aver riflettuto un po'.
