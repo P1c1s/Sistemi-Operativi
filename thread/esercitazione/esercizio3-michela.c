@@ -56,17 +56,22 @@ void* prodjob(void* argc){
 
 void* consjob(void* argc){
     while(1){
-        pthread_mutex_lock(&mutex);
-        Process* job = dequeue(coda);
-        gettimeofday(&(job->start), NULL);
-        usleep((rand()%100) * 1000);
-        gettimeofday(&(job->end), NULL);
+        if(isQueueEmpty(coda) == 0){
+            pthread_mutex_lock(&mutex);
+            Process* job = dequeue(coda);
+            gettimeofday(&(job->start), NULL);
+            usleep((rand()%100) * 1000);
+            gettimeofday(&(job->end), NULL);
 
-        printf("[TI %ld] : job processato\n", job->id);
-        double tempo = (job->end.tv_sec - job->start.tv_sec) + (job->end.tv_usec - job->start.tv_usec) / 1000000.0;
-        printf("Tempo: %f\n", tempo);
+            printf("[TI %ld] : job processato\n", job->id);
+            double tempo = (job->end.tv_sec - job->start.tv_sec) + (job->end.tv_usec - job->start.tv_usec) / 1000000.0;
+            printf("Tempo: %f\n", tempo);
 
-        pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mutex);
+        }
+        else{
+            printf("Empty queue. Waiting...\n");
+        }
         usleep((rand()%100) * 1000);
     }
     
