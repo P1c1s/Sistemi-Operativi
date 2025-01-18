@@ -21,7 +21,7 @@ void* creazioneThreadF(void* arg){
 
 int main(){
 
-    printf("Programma che stampa un thread con il suo ID per ognuno dei due processi\n\n");
+    printf("Programma che stampa un thread con il suo ID per ognuno dei due processi.\n\n");
 
     pid_t pid = fork();
 
