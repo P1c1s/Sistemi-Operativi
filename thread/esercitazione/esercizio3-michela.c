@@ -20,6 +20,7 @@ void* jobo(void*);
 void stats();
 
 pthread_mutex_t mutex;
+pthread_mutex_t mutex2;
 
 int main(){
 
@@ -28,6 +29,7 @@ int main(){
     jobsdone = 0;
     pthread_t esec, proc;
     pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&mutex2, NULL);
 
     srand(time(NULL));
 
@@ -46,6 +48,7 @@ int main(){
     pthread_join(esec, NULL);
 
     pthread_mutex_destroy(&mutex);
+    pthread_mutex_destroy(&mutex2);
     free(coda);
 
     return 0;
@@ -76,7 +79,7 @@ void* consjob(void* argc){
             usleep((rand()%100) * 1000);
             gettimeofday(&(job->end), NULL);
 
-            printf("[TI %ld] : job processato\n", job->id);
+            printf("[TID %ld] : job processato\n", job->id);
             double tempo = (job->end.tv_sec - job->start.tv_sec) + (job->end.tv_usec - job->start.tv_usec) / 1000000.0;
             printf("Tempo: %f\n", tempo);
             turnaroundtimes += ((job->end.tv_sec - job->arrival.tv_sec) + (job->end.tv_usec - job->arrival.tv_usec) / 1000000.0);
@@ -97,7 +100,9 @@ void* jobo(void* argc){
     Process* job = (Process*) malloc(sizeof(Process));
     job->id = (long) pthread_self();
     gettimeofday(&(job->arrival), NULL);
+    pthread_mutex_lock(&mutex2);
     num += 1;
+    pthread_mutex_unlock(&mutex2);
 
     printf("[TID %ld] : job in coda\n", job->id);
     enqueue(coda, job);
@@ -107,5 +112,6 @@ void* jobo(void* argc){
 
 void stats()
 {
-    printf("\nTempo di turnaruond medio\t%f\n\n", turnaroundtimes/jobsdone);
+    printf("\nTempo di turnaruond medio\t%f\n", turnaroundtimes/jobsdone);
+    printf("Numero di job nella coda\t%d\n\n", num);
 }
