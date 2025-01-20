@@ -41,6 +41,7 @@ void* prova(void* arg){
 }
 
 int main(){
+    printf("Programma che implementa il problema concettuale dei filosofi.\n\n");
     srand(time(NULL));
     pthread_mutex_init(&mutex, NULL);
 
