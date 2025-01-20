@@ -12,3 +12,4 @@ Questa cartella contiene alcuni esempi pratici - riguardo i thread - finalizzati
 
 - __ogniProcessoUnThread.c:__ Programma che stampa un thread con il suo ID per ognuno dei due processi.
 
+- __threadsCreanoProcessi.__ Programma che crea n-threads che a loro volta creano n-processi ciascuno.
