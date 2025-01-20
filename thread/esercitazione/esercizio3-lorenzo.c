@@ -24,7 +24,7 @@ int numeroProcessi;
 void* creazioneProcesso(void* arg){
     pthread_mutex_lock(&mutex2);
     Process* processo = (Process*)malloc(sizeof(Process));
-    processo->id = pthread_self();
+    processo->id = (long) pthread_self();
     gettimeofday(&(processo->arrival), NULL);
     contatore++;
     printf("Creato processo n° %d con TID [%ld]\n", contatore, processo->id);
@@ -59,12 +59,13 @@ void* cons(void* arg){
         if(isQueueEmpty(coda) == 0){
             processato = dequeue(coda);
             gettimeofday(&(processato->start), NULL);
-            usleep((rand()%100)*10000);
+            usleep((rand()%100)*5000);
             gettimeofday(&(processato->end), NULL);
             printf(YELLOW "Processato processo %ld\n" RESET, processato->id);
             numeroProcessi--;
         }
         pthread_mutex_unlock(&mutex);
+        usleep((rand()%100) *1000);
 
     }
     return NULL;
@@ -77,6 +78,7 @@ int main(){
     pthread_t produttore;
     pthread_t consumatore;
     pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&mutex2, NULL);
 
     srand(time(NULL));
    
@@ -88,6 +90,7 @@ int main(){
     pthread_join(consumatore, NULL);
 
     pthread_mutex_destroy(&mutex);
+    pthread_mutex_destroy(&mutex2);
 
     return 0;
 }
