@@ -15,7 +15,7 @@
 #define CYAN    "\033[36m" // Ciano
 #define WHITE   "\033[37m" // Bianco
 
-pthread_mutex_t mutex;
+pthread_mutex_t mutex1;
 pthread_mutex_t mutex2;
 Queue* coda;
 int contatore;
@@ -36,7 +36,7 @@ void* creazioneProcesso(void* arg){
 void* prod(void* arg){
     pthread_t processi[NUMERO_PROCESSI];
     while(1){
-        pthread_mutex_lock(&mutex);
+        pthread_mutex_lock(&mutex1);
         printf("\nProcessi in coda: %d\n", numeroProcessi);
         printf(GREEN "Produzione di %d processi per volta.\n", NUMERO_PROCESSI);
         contatore = 0;
@@ -46,7 +46,7 @@ void* prod(void* arg){
             pthread_join(processi[i], NULL);
         printf(RESET "\n");
         numeroProcessi +=10;
-        pthread_mutex_unlock(&mutex);
+        pthread_mutex_unlock(&mutex1);
         sleep(1);
     }
     return NULL;
@@ -55,7 +55,7 @@ void* prod(void* arg){
 void* cons(void* arg){
     Process* processato;
     while(1){
-        pthread_mutex_lock(&mutex);
+        pthread_mutex_lock(&mutex1);
         if(isQueueEmpty(coda) == 0){
             processato = dequeue(coda);
             gettimeofday(&(processato->start), NULL);
@@ -64,7 +64,7 @@ void* cons(void* arg){
             printf(YELLOW "Processato processo %ld\n" RESET, processato->id);
             numeroProcessi--;
         }
-        pthread_mutex_unlock(&mutex);
+        pthread_mutex_unlock(&mutex1);
         usleep((rand()%100) *1000);
 
     }
@@ -77,7 +77,7 @@ int main(){
     coda = (Queue*)malloc(sizeof(Queue));
     pthread_t produttore;
     pthread_t consumatore;
-    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&mutex1, NULL);
     pthread_mutex_init(&mutex2, NULL);
 
     srand(time(NULL));
@@ -89,7 +89,7 @@ int main(){
     pthread_join(produttore, NULL);
     pthread_join(consumatore, NULL);
 
-    pthread_mutex_destroy(&mutex);
+    pthread_mutex_destroy(&mutex1);
     pthread_mutex_destroy(&mutex2);
 
     return 0;
