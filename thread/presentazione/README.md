@@ -12,4 +12,9 @@ Questa cartella contiene alcuni esempi pratici - riguardo i thread - finalizzati
 
 - __ogniProcessoUnThread.c:__ Programma che stampa un thread con il suo ID per ognuno dei due processi.
 
-- __threadsCreanoProcessi.__ Programma che crea n-threads che a loro volta creano n-processi ciascuno.
+- __threadsCreanoProcessi.c__ Programma che crea n-threads che a loro volta creano n-processi ciascuno.
+
+- __mutex.c:__ Programma che esegue due tipologie di thread svolgono le stesse oprazioni ma in modo diverso
+entrambe aggiornano il valore di due contatori con una sleep(1) in mezzo. 
+    1. threadEfficente() esegue due mutex distinte distribuendo così il carico di lavoro
+    2. threadNonEfficente() esegue una sola mutex aggiornando in modo sequenziale le istruzioni
