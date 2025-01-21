@@ -12,8 +12,10 @@ int main(){
     printf("Programma che scrive dei numeri in un file e poi li legge dal file.\n\n");
 
     int fd = open("Pippo.txt", O_CREAT | O_WRONLY, S_IRWXU);
-    if (fd == -1)
-        printf("Document non creato\n");
+    if (fd == -1){
+        fprintf(stderr, "Documento non creato\n");
+        exit(1);
+    }
 
     srand(time(NULL));
 
