@@ -14,79 +14,42 @@
 #define CYAN    "\033[36m" // Ciano
 #define WHITE   "\033[37m" // Bianco
 
-#define NUM_THREADS 10
-int contatoreUno;
-int contatoreDue;
+#define NUM_THREADS 2
+int numero;
 pthread_mutex_t mutex1;
-pthread_mutex_t mutex2;
-pthread_mutex_t mutex3;
 
-void* threadEfficente(void* arg){
-    struct timeval start, end;
-    gettimeofday(&start, NULL);
-
+void* thread(void* arg){
+    printf(GREEN "[TID %ld] Inizio a lavorare\n" RESET, pthread_self());
     pthread_mutex_lock(&mutex1);
-    contatoreUno++;
+    printf(RED "Queste quattro stampe ROSSE sono dentro ad una mutex, questo non implica che vengano effettuate sequenzialmente\n", pthread_self());
+    printf("[TID %ld] Ho fatto una mutex_lock così da accedere alla risorsa condivisa 'numero'\n", pthread_self());
+    numero = rand()%100;
+    printf("[TID %ld] %d\n", pthread_self(), numero);
+    printf("[TID %ld] Sto per fare una mutex_unlock per rilasciare la risorsa 'numero'\n", pthread_self());
     pthread_mutex_unlock(&mutex1);
-    sleep(1);
-    pthread_mutex_lock(&mutex2);
-    contatoreDue++;
-    pthread_mutex_unlock(&mutex2);
-
-    gettimeofday(&end, NULL);
-    double tempo = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
-    printf(GREEN "[Eff] Tempo: %2f\n", tempo);
-    usleep(1000);
+    printf(YELLOW "[TID %ld] Ho finito il mio lavoro\n" RESET, pthread_self());
     return NULL;
 }
-
-void* threadNonEfficente(void* arg){
-    struct timeval start, end;
-    gettimeofday(&start, NULL);
-
-    pthread_mutex_lock(&mutex3);
-    contatoreUno++;
-    sleep(1);
-    contatoreDue++;
-    pthread_mutex_unlock(&mutex3);
-
-    gettimeofday(&end, NULL);
-    double tempo = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1000000.0;
-    printf(RED "[Non Eff] Tempo: %2f\n", tempo);
-    usleep(1000);
-    return NULL;
-}
-
 
 int main(){
 
-    printf("Programma che esegue due tipologie di thread svolgono le stesse oprazioni ma in modo diverso\n");
-    printf("entrambe aggiornano il valore di due contatori con una sleep(1) in mezzo.\n");
-    printf("1. threadEfficente() esegue due mutex distinte distribuendo così il carico di lavoro\n");
-    printf("2. threadNonEfficente() esegue una sola mutex aggiornando in modo sequenziale le istruzioni\n\n");
+    printf("Programma che avvia due threads usando una mutex.\n\n");
 
     srand(time(NULL));
 
     pthread_mutex_init(&mutex1, NULL);
-    pthread_mutex_init(&mutex2, NULL);
-    pthread_mutex_init(&mutex3, NULL);
 
-    pthread_t threadsUno[NUM_THREADS];
-    pthread_t threadsDue[NUM_THREADS];
+    pthread_t threads[NUM_THREADS];
 
     for(int i=0; i<NUM_THREADS; i++){
-        pthread_create(&threadsUno[i], NULL, threadEfficente, NULL);
-        pthread_create(&threadsDue[i], NULL, threadNonEfficente, NULL);
+        pthread_create(&threads[i], NULL, thread, NULL);
     }
 
     for(int i=0; i<NUM_THREADS; i++){
-        pthread_join(threadsUno[i], NULL);
-        pthread_join(threadsDue[i], NULL);
+        pthread_join(threads[i], NULL);
     }
 
     pthread_mutex_destroy(&mutex1);
-    pthread_mutex_destroy(&mutex2);
-    pthread_mutex_destroy(&mutex3);
 
     return 0;
 }
