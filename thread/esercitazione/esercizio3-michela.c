@@ -20,7 +20,6 @@ void* jobo(void*);
 void stats();
 
 pthread_mutex_t mutex;
-pthread_mutex_t mutex2;
 
 int main(){
 
@@ -29,7 +28,6 @@ int main(){
     jobsdone = 0;
     pthread_t esec, proc;
     pthread_mutex_init(&mutex, NULL);
-    pthread_mutex_init(&mutex2, NULL);
 
     srand(time(NULL));
 
@@ -48,7 +46,6 @@ int main(){
     pthread_join(esec, NULL);
 
     pthread_mutex_destroy(&mutex);
-    pthread_mutex_destroy(&mutex2);
     free(coda);
 
     return 0;
@@ -56,14 +53,14 @@ int main(){
 
 
 void* prodjob(void* argc){
-    pthread_t job;
+    pthread_t job[RATE];
     while(1){
-        pthread_mutex_lock(&mutex);
         for(int i=0; i<RATE && num<MAX; i++){
-            pthread_create(&job, NULL, jobo, NULL);
-            pthread_join(job, NULL);
+            pthread_create(job+i, NULL, jobo, NULL);
         }
-        pthread_mutex_unlock(&mutex);
+        for(int i=0; i<RATE && num<MAX; i++){
+            pthread_join(job+i, NULL);
+        }
         sleep(1);
     }
     return NULL;
@@ -72,9 +69,12 @@ void* prodjob(void* argc){
 void* consjob(void* argc){
     while(1){
         if(isQueueEmpty(coda) == 0){
-            pthread_mutex_lock(&mutex);
             Process* job = dequeue(coda);
+
+            pthread_mutex_lock(&mutex);
             num--;
+            pthread_mutex_unlock(&mutex);
+
             gettimeofday(&(job->start), NULL);
             usleep((rand()%100) * 1000);
             gettimeofday(&(job->end), NULL);
@@ -83,9 +83,11 @@ void* consjob(void* argc){
             double tempo = (job->end.tv_sec - job->start.tv_sec) + (job->end.tv_usec - job->start.tv_usec) / 1000000.0;
             printf("Tempo: %f\n", tempo);
             turnaroundtimes += ((job->end.tv_sec - job->arrival.tv_sec) + (job->end.tv_usec - job->arrival.tv_usec) / 1000000.0);
+            
+            pthread_mutex_lock(&mutex);
             jobsdone += 1;
-
             pthread_mutex_unlock(&mutex);
+
         }
         else{
             printf("Empty queue. Waiting...\n");
@@ -100,9 +102,10 @@ void* jobo(void* argc){
     Process* job = (Process*) malloc(sizeof(Process));
     job->id = (long) pthread_self();
     gettimeofday(&(job->arrival), NULL);
-    pthread_mutex_lock(&mutex2);
+    
+    pthread_mutex_lock(&mutex);
     num += 1;
-    pthread_mutex_unlock(&mutex2);
+    pthread_mutex_unlock(&mutex);
 
     printf("[TID %ld] : job in coda\n", job->id);
     enqueue(coda, job);
