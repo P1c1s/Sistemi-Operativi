@@ -4,6 +4,8 @@
 #include<fcntl.h>
 #include<pthread.h>
 
+// !NOTA : Prima di eseguirlo assicurarsi di aver creato un file di testo "Testo.txt"
+
 void* occorrenze(void*);
 
 char titolo[] = "Testo.txt";
