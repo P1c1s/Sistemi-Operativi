@@ -24,6 +24,8 @@
         - mode: Specifica i permesssi per l'accesso al file  
     - `#include <unistd.h>` libreria usata anche per la gestione dei files
     -   `write(fileDescriptor, buffer, sizeof(...))` funzione che scrive su un file che è stato precedentente aperto e in caso di errore restituisce -1
+    -   `read(fileDescriptor, buffer, sizeof(...))`
+    funzione che legge da un file che è stato precedentemente aperto e in caso di errore restituisce -1
     - `close(fileDescriptor)` funzione che chiude un file precedentemente aperto e in caso di errore restituisce -1
 
 ## Memoria
@@ -34,7 +36,7 @@
     - `free(puntatore)` funzione utilizzata per liberare la memoria precedentemente allocata dinamicamente
 - `#include <string.h>` libreria per le stringhe e per la ?memoria?
     - `memset(puntatore, valore, dimensione)` funzione che sovrascrive un blocco di memoria con un valore specifico
-    - `memcpy(puntatoreNuovo, puntatoreVecchio, dimensione)` funzione che copia il blocchi di memoria
+    - `memcpy(puntatoreNuovo, puntatoreVecchio, dimensione)` funzione che copia i blocchi di memoria
 - `#include <sys/mman.h>` libreria usata per la gestione della memoria
     - `mmap()`
     - `munmap`  
