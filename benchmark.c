@@ -8,6 +8,7 @@
 
 #define RESET   "\033[0m"  // Reset del colore
 #define RED     "\033[31m" // Rosso
+#define BOLD_RED     "\033[1;31m" // Rosso
 #define GREEN   "\033[32m" // Verde
 #define YELLOW  "\033[33m" // Giallo
 #define BLUE    "\033[34m" // Blu
@@ -21,6 +22,7 @@ typedef struct Nodo {
     struct Nodo* next;
 } Nodo;
 
+double tempi[10];
 
 /* NOTA REFACTORING -> CREARE FUNZINE GET TEMPO*/
 
@@ -93,7 +95,7 @@ void testMemoriaSecondaria(){
 }
 
 //CHAT GPT BFF
-void testCore(){
+void testTeraFlops(){
     printf(BOLD_WHITE "\nTera Flops\n" RESET);
 
     const long long num_operations = 1e7; // Numero ridotto di operazioni in virgola mobile
@@ -123,11 +125,56 @@ void testCore(){
 
 }
 
+void testSinglCore(){
+    printf(BOLD_WHITE "\nTera Flops\n" RESET);
+    for(int i=0; i<10000; i++){
+
+    }
+}
+
+void testSingleCore(){
+    printf(BOLD_WHITE "\nSingle-core\n" RESET);
+    struct timeval inizio, fine;
+    gettimeofday(&inizio, NULL);
+    for(int i=0; i<40000; i++){
+        float num = 20232413/232413;
+    }
+    gettimeofday(&fine, NULL);
+    double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
+    printf("Tempo: %2f\n", tempo);
+}
+
+void* testMultiCore(void* arg){
+    int indice = *((int*)arg);
+    struct timeval inizio, fine;
+    gettimeofday(&inizio, NULL);
+    for(int i=0; i<10000; i++){
+        float num = 20232413/232413;
+    }
+    gettimeofday(&fine, NULL);
+    double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
+    tempi[indice] = tempo;
+    return NULL;
+}
+
 int main(){
-    printf(RED "BENCHMARK\n" RESET);
-    printf("[PID %d]\n", getpid());
+    printf(BOLD_RED "BENCHMARK ");
+    printf("[PID %d]\n" RESET, getpid());
     testMemoriaPrimaria();
     testMemoriaSecondaria();
-    testCore();
+    testTeraFlops();
+    testSingleCore();
+
+    pthread_t threads[4];
+    for(int i=0; i<4; i++)
+        pthread_create(&threads[i], NULL, testMultiCore, (void*)&i);
+    for(int i=0; i<4; i++)
+        pthread_join(threads[i],  NULL);
+
+    printf(BOLD_WHITE "\nMulti-core\n" RESET);
+    for(int i=0; i<4; i++)
+        printf("Tempo: %2f\n", tempi[i]);
+
+
     return 0;
 }
