@@ -1,14 +1,12 @@
 # Sistemi-Operativi
 
 ## Indice
-1. [Files](#files)
-2. [Memoria](#memoria)
-3. [Fork](#fork)
-4. [Thread](#thread)
-
-
-- `#include <stdio.h>` libreria usata per lo standard input e output
-- `fprintf(stderr, "testo")` usato per mandare sul error stream un messaggio di errore
+- [Sistemi-Operativi](#sistemi-operativi)
+  - [Indice](#indice)
+  - [Files](#files)
+  - [Memoria](#memoria)
+  - [Fork](#fork)
+  - [Thread](#thread)
 
 ## Files
 - `#include <fcntl.h>` libreria usata per la la gestione dei files
@@ -38,18 +36,36 @@
     - `memset(puntatore, valore, dimensione)` funzione che sovrascrive un blocco di memoria con un valore specifico
     - `memcpy(puntatoreNuovo, puntatoreVecchio, dimensione)` funzione che copia i blocchi di memoria
 - `#include <sys/mman.h>` libreria usata per la gestione della memoria
-    - `mmap()`
-    - `munmap`  
+    - `mmap(indirizzoDesiderato, dimensione, protezione, flags, fileDescriptior, offset)` funzione che mappa dei blocchi di memoria, utilizzata solitamente per mappare i file.
+      - indirizzoDesiderato: indirizzo di memoria da cui si vuole iniziare a mappare, NULL se si lascia fare al sistema operativo
+      - dimensione: dimensione di memoria che vogliamo mappare
+      - protezione: specificano i permessi di lettura e scrittura per la porzione di memoria interessata
+        - PROT_NONE: non è possibile accedere alla pagina 
+        - PROT_READ: è possibile leggere la pagina
+        - PROT_WRITE: è possibile scrivere sulla pagina
+        - PROT_EXEC: è possibile eseguire la pagina
+      - flags: specifica informazioni aggiuntive
+        - MAP_ANONYMOUS o MAP_ANON: si mappa una porzione di memoria non legata ad un file. L'offset viene ignorato
+        - MAP_FILE: si mappa regolarmente un file
+        - MAP_FIXED: non permette al sistema di selezionare un indirizzo di memoria diverso da quello specificato
+        - MAP_PRIVATE: le modifiche sono private
+        - MAP_SHARED: le modifiche sono condivise
+      - fileDescriptor: riferimento al file se se ne vuole mappare uno, -1 altrimenti
+      - offset: offset della porzione di file da mappare rispetto all'inizio del file stesso
+    - `munmap(puntatore, dimensione)` libera la dimensione di memoria specificata a partire dall'indirizzo indicato dal puntatore  
 
 ## Fork
 - `#include <unistd.h>` libreria usata per la creazione e la gestione dei processi oppure per l'esecuzione di comandi della console
     - `fork()` funzione che crea un processo che restituisce un intero pari al pid del processo creato
     - `getpid()` funzione che restituisce un intero pari al pid del processo corrente
     - `getppid()` funzione che restituisce un intero pari al pid genitore del processo corrente
-    - `execl("/usr/bin/echo", "echo", "Ciao sono il processo genitore che usa ECHO", NULL);`
-    - `execve(?)`
-    - `execvp(args[0], args);`
-    - `execvpe(?);`
+    - `exec` la classe di funzioni exec permette di eseguire dei comandi della shell all'interno del programma C. La sequenza passata alla funzione deve sempre terminare con NULL, che la exec sia in forma di liste o vettoiale.
+      - `execl(path, comando, argomento1, argomento2, NULL)` permette di eseguire il file/comando presente nel path specificato, passando gli argomenti scandendoli uno per uno
+      - `execlp(comando, comando, argomento1, argomento2, NULL)` permette di eseguire il file/comando specificato come primo e secondo argomento senza specificare il percorso del comando perché viene preso dalla variabile d'ambiente PATH
+    - `execle(path, comando, argomento1, argomento2, NULL, env[])` permette si eseguire il comando specificato come secondo argomento presente al path del primo argomento potendo specificare le variabili d'ambiente dove cercare il comando in un vettore che termina con NULL
+    - `execv(path, args[]);` simile al execl ma anziché passare gli argomenti enumerandoli, vengono passati all'interno di un vettore che termina con un NULL
+    - `execvp(args[0], args[]);` simile al execlp ma gli argomenti vengono passati all'interno di un vettore che termina con un NULL
+    - `execvpe(args[0], args[], env[])` simile ad execle, gli argomenti sono passati in un vettore che termina cono NULL. Cerca il comando all'interno della variabile d'ambiente PATH del sistema che esegue il programma
 - `#include <sys/wait.h>` per la gestione dei processi
     - `wait(NULL|&pid)` funzione che attende la terminazione di ogni processo figlio
     - `waitpid(pidDaAspettare, NULL)` funzione che attende la terminazione del processo con pid passato come argomento

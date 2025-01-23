@@ -12,6 +12,8 @@ char titolo[] = "Testo.txt";
 
 int main(){
 
+    printf("Il programma conta le occorrenze all'interno del file Testo.txt (deve essere già presente) di 5 caratteri scelti dall'utente");
+
     pthread_t t[5];
     char* lettera = (char*) malloc(5*sizeof(char));
     printf("Inserire 5 lettere di cui contare le occorrenze\n\n");
