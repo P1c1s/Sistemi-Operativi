@@ -5,6 +5,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <fcntl.h>
+#include <string.h>
 
 #define RESET   "\033[0m"  // Reset del colore
 #define RED     "\033[31m" // Rosso
@@ -17,6 +18,8 @@
 #define WHITE   "\033[37m" // Bianco
 #define BOLD_WHITE "\033[1;37m" // Bianco in grassetto
 
+#define ARRAY_SIZE 1024 * 1024 * 100 // Definisce la dimensione dell'array (100MB)
+
 typedef struct Nodo {
     int valore;
     struct Nodo* next;
@@ -24,11 +27,17 @@ typedef struct Nodo {
 
 double tempi[10];
 
-/* NOTA REFACTORING -> CREARE FUNZINE GET TEMPO*/
+/* Funzione per l'accesso alla memoria */
+void access_memory(int* array) {
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        array[i] = array[i] * 2; // Accede alla memoria e modifica il valore
+    }
+}
 
-void testMemoriaPrimaria(){
-    printf(BOLD_WHITE "\nMemoria pirmaria\n" RESET);
-    int DIM = 1024*1024*10; // Dimensione di un nodo in byte
+/* Funzione per misurare l'accesso alla memoria primaria */
+void testMemoriaPrimaria() {
+    printf(BOLD_WHITE "\nMemoria primaria\n" RESET);
+    int DIM = 1024 * 1024 * 10; // Dimensione di un nodo in byte
     struct timeval inizio, fine;
     gettimeofday(&inizio, NULL);
     
@@ -36,7 +45,7 @@ void testMemoriaPrimaria(){
     testa->next = NULL;
 
     // Allocazione di 100 milioni di nodi
-    for(int i=0; i<DIM; i++) {
+    for(int i = 0; i < DIM; i++) {
         Nodo* nodo = (Nodo*)malloc(sizeof(Nodo));
         nodo->valore = rand() % 100;
         nodo->next = testa;
@@ -47,12 +56,12 @@ void testMemoriaPrimaria(){
     double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
 
     // Calcola la larghezza di banda
-    double memoria_totale = DIM*sizeof(Nodo); // Memoria totale allocata in byte
+    double memoria_totale = DIM * sizeof(Nodo); // Memoria totale allocata in byte
     double bandwidth = memoria_totale / tempo; // Larghezza di banda in byte/secondo
 
     // Converti la larghezza di banda in MB/s
     printf("Tempo di allocazione: %.6f secondi\n", tempo);
-    printf("Larghezza di banda: %.2f MB/s\n", bandwidth/(1024*1024));
+    printf("Larghezza di banda: %.2f MB/s\n", bandwidth / (1024 * 1024));
 
     // Libera la memoria
     Nodo* app;
@@ -63,39 +72,65 @@ void testMemoriaPrimaria(){
     }
 }
 
-void testMemoriaSecondaria(){
-    printf(BOLD_WHITE "\nMemoria sencondaria\n" RESET);
-    int DIM = 1024*1024*10;
+/* Funzione per misurare l'accesso alla memoria primaria 2 */
+void testMemoriaPrimaria2() {
+    printf(BOLD_WHITE "\nMemoria primaria 2\n" RESET);
+    long DIM = 1024 * 1024 * 1024; // Dimensione di 1 GB
     struct timeval inizio, fine;
-
-    int fd = open("test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0777);
-    if(fd == -1){
-        fprintf(stderr, "Errre apertura file");
-        exit(1);
-        close(fd);
-    }
-
     gettimeofday(&inizio, NULL);
-    for(int i=0; i<DIM; i++){
-        char buffer = (char)rand()%256;
-        write(fd, &buffer, sizeof(char));
+
+    // Allocazione di 1 GB di memoria
+    char* buffer = (char*)malloc(DIM);
+    if (buffer == NULL) {
+        fprintf(stderr, "Errore nell'allocazione della memoria\n");
+        exit(1);
     }
+
     gettimeofday(&fine, NULL);
     double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
-    double memoria_totale = DIM*sizeof(char); // Memoria totale allocata in byte
+
+    // Calcola la larghezza di banda
+    double memoria_totale = DIM; // Memoria totale allocata in byte
     double bandwidth = memoria_totale / tempo; // Larghezza di banda in byte/secondo
 
     // Converti la larghezza di banda in MB/s
     printf("Tempo di allocazione: %.6f secondi\n", tempo);
-    printf("Larghezza di banda: %.2f MB/s\n", bandwidth/(1024*1024));
+    printf("Larghezza di banda: %.2f MB/s\n", bandwidth / (1024 * 1024));
 
-
-    close(fd);
-
+    free(buffer); // Libera la memoria
 }
 
-//CHAT GPT BFF
-void testTeraFlops(){
+/* Funzione per misurare l'accesso alla memoria secondaria */
+void testMemoriaSecondaria() {
+    printf(BOLD_WHITE "\nMemoria secondaria\n" RESET);
+    int DIM = 1024 * 1024 * 10;
+    struct timeval inizio, fine;
+
+    int fd = open("test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0777);
+    if (fd == -1) {
+        fprintf(stderr, "Errore apertura file\n");
+        exit(1);
+    }
+
+    gettimeofday(&inizio, NULL);
+    for (int i = 0; i < DIM; i++) {
+        char buffer = (char)(rand() % 256);
+        write(fd, &buffer, sizeof(char));
+    }
+    gettimeofday(&fine, NULL);
+    double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
+    double memoria_totale = DIM * sizeof(char); // Memoria totale allocata in byte
+    double bandwidth = memoria_totale / tempo; // Larghezza di banda in byte/secondo
+
+    // Converti la larghezza di banda in MB/s
+    printf("Tempo di allocazione: %.6f secondi\n", tempo);
+    printf("Larghezza di banda: %.2f MB/s\n", bandwidth / (1024 * 1024));
+
+    close(fd);
+}
+
+/* Funzione per misurare le prestazioni in TERAFLOPS */
+void testTeraFlops() {
     printf(BOLD_WHITE "\nTera Flops\n" RESET);
 
     const long long num_operations = 1e7; // Numero ridotto di operazioni in virgola mobile
@@ -122,34 +157,28 @@ void testTeraFlops(){
     // Stampa dei risultati
     printf("Tempo impiegato: %.6f secondi\n", time_taken);
     printf("Prestazioni: %.6f TERAFLOPS\n", teraflops);
-
 }
 
-void testSinglCore(){
-    printf(BOLD_WHITE "\nTera Flops\n" RESET);
-    for(int i=0; i<10000; i++){
-
-    }
-}
-
-void testSingleCore(){
+/* Funzione per misurare il tempo in un core */
+void testSingleCore() {
     printf(BOLD_WHITE "\nSingle-core\n" RESET);
     struct timeval inizio, fine;
     gettimeofday(&inizio, NULL);
-    for(int i=0; i<40000; i++){
-        float num = 20232413/232413;
+    for (int i = 0; i < 40000; i++) {
+        float num = 20232413 / 232413;
     }
     gettimeofday(&fine, NULL);
     double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
-    printf("Tempo: %2f\n", tempo);
+    printf("Tempo: %.6f secondi\n", tempo);
 }
 
-void* testMultiCore(void* arg){
+/* Funzione per eseguire il test multi-core */
+void* testMultiCore(void* arg) {
     int indice = *((int*)arg);
     struct timeval inizio, fine;
     gettimeofday(&inizio, NULL);
-    for(int i=0; i<10000; i++){
-        float num = 20232413/232413;
+    for (int i = 0; i < 10000; i++) {
+        float num = 20232413 / 232413;
     }
     gettimeofday(&fine, NULL);
     double tempo = (fine.tv_sec - inizio.tv_sec) + (fine.tv_usec - inizio.tv_usec) / 1000000.0;
@@ -157,24 +186,69 @@ void* testMultiCore(void* arg){
     return NULL;
 }
 
-int main(){
+/* Funzione per il test della cache */
+void cache() {
+    int* array = (int*)malloc(ARRAY_SIZE * sizeof(int)); // Dichiarazione dell'array
+    if (array == NULL) {
+        fprintf(stderr, "Errore nell'allocazione dell'array\n");
+        exit(1);
+    }
+
+    // Inizializza l'array
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        array[i] = 0;
+    }
+
+    // Misura il tempo di accesso alla memoria
+    clock_t start = clock();
+    access_memory(array);
+    clock_t end = clock();
+
+    // Calcola il tempo impiegato
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+
+    // Calcola la larghezza di banda
+    double data_transferred = ARRAY_SIZE * sizeof(int); // in byte
+    double bandwidth = data_transferred / time_spent; // in byte/secondo
+
+    // Converti in gigabyte/secondo
+    bandwidth /= (1024 * 1024 * 1024); // Converti in GB/s
+
+    printf("Tempo di accesso: %.6f secondi\n", time_spent);
+    printf("Larghezza di banda della cache: %.6f GB/s\n", bandwidth);
+
+    free(array); // Libera la memoria
+}
+
+int main(int argc, char* argv[]) {
     printf(BOLD_RED "BENCHMARK ");
     printf("[PID %d]\n" RESET, getpid());
-    testMemoriaPrimaria();
-    testMemoriaSecondaria();
-    testTeraFlops();
-    testSingleCore();
 
-    pthread_t threads[4];
-    for(int i=0; i<4; i++)
-        pthread_create(&threads[i], NULL, testMultiCore, (void*)&i);
-    for(int i=0; i<4; i++)
-        pthread_join(threads[i],  NULL);
-
-    printf(BOLD_WHITE "\nMulti-core\n" RESET);
-    for(int i=0; i<4; i++)
-        printf("Tempo: %2f\n", tempi[i]);
-
+    if (argc > 1) {
+        if (strcmp(argv[1], "-m") == 0 || strcmp(argv[1], "-a") == 0)
+            testMemoriaPrimaria();
+        if (strcmp(argv[1], "-M") == 0 || strcmp(argv[1], "-a") == 0)
+            testMemoriaSecondaria();
+        if (strcmp(argv[1], "-t") == 0 || strcmp(argv[1], "-a") == 0)
+            testTeraFlops();
+        if (strcmp(argv[1], "-sc") == 0 || strcmp(argv[1], "-a") == 0)
+            testSingleCore();
+        if (strcmp(argv[1], "-ca") == 0 || strcmp(argv[1], "-a") == 0)
+            cache();
+        if (strcmp(argv[1], "-mc") == 0 || strcmp(argv[1], "-a") == 0) {
+            pthread_t threads[4];
+            for (int i = 0; i < 4; i++) {
+                pthread_create(&threads[i], NULL, testMultiCore, (void*)&i);
+            }
+            for (int i = 0; i < 4; i++) {
+                pthread_join(threads[i], NULL);
+            }
+            printf(BOLD_WHITE "\nMulti-core\n" RESET);
+            for (int i = 0; i < 4; i++) {
+                printf("Tempo per core %d: %.6f secondi\n", i, tempi[i]);
+            }
+        }
+    }
 
     return 0;
 }
