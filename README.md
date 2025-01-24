@@ -62,10 +62,10 @@
     - `exec` la classe di funzioni exec permette di eseguire dei comandi della shell all'interno del programma C. La sequenza passata alla funzione deve sempre terminare con NULL, che la exec sia in forma di liste o vettoiale.
       - `execl(path, comando, argomento1, argomento2, NULL)` permette di eseguire il file/comando presente nel path specificato, passando gli argomenti scandendoli uno per uno
       - `execlp(comando, comando, argomento1, argomento2, NULL)` permette di eseguire il file/comando specificato come primo e secondo argomento senza specificare il percorso del comando perché viene preso dalla variabile d'ambiente PATH
-    - `execle(path, comando, argomento1, argomento2, NULL, env[])` permette si eseguire il comando specificato come secondo argomento presente al path del primo argomento potendo specificare le variabili d'ambiente dove cercare il comando in un vettore che termina con NULL
-    - `execv(path, args[]);` simile al execl ma anziché passare gli argomenti enumerandoli, vengono passati all'interno di un vettore che termina con un NULL
-    - `execvp(args[0], args[]);` simile al execlp ma gli argomenti vengono passati all'interno di un vettore che termina con un NULL
-    - `execvpe(args[0], args[], env[])` simile ad execle, gli argomenti sono passati in un vettore che termina cono NULL. Cerca il comando all'interno della variabile d'ambiente PATH del sistema che esegue il programma
+      - `execle(path, comando, argomento1, argomento2, NULL, env[])` permette si eseguire il comando specificato come secondo argomento presente al path del primo argomento potendo specificare le variabili d'ambiente dove cercare il comando in un vettore che termina con NULL
+      - `execv(path, args[]);` simile al execl ma anziché passare gli argomenti enumerandoli, vengono passati all'interno di un vettore che termina con un NULL
+      - `execvp(args[0], args[]);` simile al execlp ma gli argomenti vengono passati all'interno di un vettore che termina con un NULL
+      - `execvpe(args[0], args[], env[])` simile ad execle, gli argomenti sono passati in un vettore che termina cono NULL. Cerca il comando all'interno della variabile d'ambiente PATH del sistema che esegue il programma
 - `#include <sys/wait.h>` per la gestione dei processi
     - `wait(NULL|&pid)` funzione che attende la terminazione di ogni processo figlio
     - `waitpid(pidDaAspettare, NULL)` funzione che attende la terminazione del processo con pid passato come argomento
