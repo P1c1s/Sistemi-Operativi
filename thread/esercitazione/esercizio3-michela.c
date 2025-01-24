@@ -59,7 +59,7 @@ void* prodjob(void* argc){
             pthread_create(job+i, NULL, jobo, NULL);
         }
         for(int i=0; i<RATE && num<MAX; i++){
-            pthread_join(job+i, NULL);
+            pthread_join(*(job+i), NULL);
         }
         sleep(1);
     }
