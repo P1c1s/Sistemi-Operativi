@@ -19,7 +19,7 @@ pthread_mutex_t mutex;
 // Funzione che verrà eseguita dai thread
 void* creazioneThread(void* arg) {
     pid_t pid = *((int*)arg); // Cast dell'argomento a un intero
-    pthread_t thread_id = lopthread_self(); // Ottiene l'ID del thread corrente
+    pthread_t thread_id = pthread_self(); // Ottiene l'ID del thread corrente
     if(pid>0){
         printf(GREEN "[PID %d] [TID %lu] Sono il genitore e inizo a lavorare\n" RESET, getpid(), (unsigned long)thread_id);
         usleep(10000*(rand()%100));
