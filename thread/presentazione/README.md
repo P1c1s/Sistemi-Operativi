@@ -21,4 +21,4 @@ entrambe aggiornano il valore di due contatori con una sleep(1) in mezzo.
 
 - __prodConsFile.c__ Programma che crea due processi: uno scrive su un file e l'altro legge dallo stesso.
 
--__prodConsVettore.c__ Programma con due thread che condividono lo stesso vettore: un thread genera un numero casuale da inserire in una posizione a caso del vettore; allo stesso modo l'altro sceglie un elemento in una posizione casuale del vettore e ne azzera il valore. 
+- __prodConsVettore.c__ Programma con due thread che condividono lo stesso vettore: un thread genera un numero casuale da inserire in una posizione a caso del vettore; allo stesso modo l'altro sceglie un elemento in una posizione casuale del vettore e ne azzera il valore. 
