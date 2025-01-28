@@ -66,6 +66,8 @@ void* lettura(void* arg){
 
 int main(){
 
+    printf("Programma che crea due threads: uno scrive su un file e l'altro lo legge dallo stesso\n\n");
+
     int* fd;
 
     pthread_t writer;
