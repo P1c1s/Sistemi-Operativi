@@ -18,7 +18,7 @@ pthread_mutex_t sediaBarbiere;
 pthread_mutex_t attesa;
 
 typedef struct Coda{
-    unsigned long clienti[DIM];
+    pthread_t clienti[DIM];
     int front;
     int rear;
 }Coda;
@@ -33,9 +33,9 @@ int isFull() {
     return sedie.rear == DIM - 1;
 }
 
-void enqueue(int cliente) {
+void enqueue(unsigned long cliente) {
     if(isFull()){
-        printf(RED "Tutte le sedie occupate, cliente perso\n" RESET);
+        printf(RED "Tutte le sedie sono occupate, cliente perso\n" RESET);
         return;
     }
     if(isEmpty()){
@@ -43,7 +43,7 @@ void enqueue(int cliente) {
     }
     sedie.rear++;
     sedie.clienti[sedie.rear] = cliente;
-    printf(YELLOW "Nuovo cliente arrivato %ld\n" RESET, sedie.clienti[sedie.rear]);
+    printf(YELLOW "Nuovo cliente arrivato %lu\n" RESET, sedie.clienti[sedie.rear]);
 }
 
 // Funzione per rimuovere un elemento dalla sedie
@@ -52,7 +52,7 @@ int dequeue() {
         printf("Coda vuota! Impossibile rimuovere un elemento.\n");
         return -1; // Valore di errore
     }
-    int cliente = sedie.clienti[sedie.front];
+    unsigned long cliente = sedie.clienti[sedie.front];
     if(sedie.front >= sedie.rear){
         // Se c'è solo un elemento, resetta la sedie
         sedie.front = -1;
@@ -75,9 +75,9 @@ void* barbiere_routine(void* arg){
         if(!isEmpty()){
             pthread_mutex_lock(&sediaBarbiere);
             unsigned long cliente = dequeue();
-            printf(BLUE "Sto talgiando i capelli al cliente %ld \n", cliente);
+            printf(BLUE "Sto talgiando i capelli al cliente %lu \n", cliente);
             usleep(1000*30*(rand()%100));
-            printf(BLUE "Ho finito il taglio del cliente %ld\n", cliente);
+            printf(BLUE "Ho finito il taglio del cliente %lu\n", cliente);
             pthread_mutex_unlock(&sediaBarbiere);  
         }
         else{
@@ -101,6 +101,7 @@ void* prod(){
 }
 
 int main(){
+    printf("Programma che implementa il problema del barbiere addormentato.\n\n");
     sedie.front = -1;
     sedie.rear = -1;
     pthread_t barbiere, produttoreClienti;
