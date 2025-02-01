@@ -67,7 +67,7 @@ void generazione(){
 
 int main(){
 
-    printf("Programma che \n\n");
+    printf("Programma che crea una copia di un file generato randomicamente qualora la dimensine del file sia inferiore a 1000 bytes\n\n");
 
     srand(time(NULL));
 
