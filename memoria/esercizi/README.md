@@ -1,1 +1,5 @@
-crea un struttura dati di tipo pila - come lista - che usando mmap e munmap e che l'utente possa in runtime aggiungere ed eliminare gli elementi
+#### Esericizio 3
+##### Manipolazione della memoria
+Scrivere un programma che sfrutta una pila che in runtime si riempe e svuota di n-elementi e che scrive ..... 
+- Creare una pila implementata come lista semplicemente concatenata
+- Usare `mmap` e `munmap` per aggiungere elementi nella pila
