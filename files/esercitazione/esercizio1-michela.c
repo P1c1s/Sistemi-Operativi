@@ -64,7 +64,7 @@ void copia(){
             exit(1);
         }
 
-        int bcopia = write(fdcopia, testo, sizeof(char));
+        int bcopia = write(fdcopia, testo, b*sizeof(char));
         if (bcopia < 0){
             fprintf(stderr, "Errore nella copia del file\n");
         }
