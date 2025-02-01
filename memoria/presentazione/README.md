@@ -9,3 +9,7 @@ Questa cartella contiene alcuni esempi pratici - riguardo i thread - finalizzati
 
 - __stampaInidirizziNonAdiacenti.c__ Programma che stampa gli indirizzi di memoria di una struttura dati lista di lunghezza variabile.
 [Nota] Sono indirizzi di memoria non adiacenti ma casuali.
+
+- __stampaInidirizziCasuali.c:__ Programma che stampa gli indirizzi di memoria di 10 allocazioni
+[Nota] Se viene fatta la free(intero) l'indirizzo &(*intero) non cambia ma rimane sempre lo stesso
+
