@@ -22,8 +22,10 @@ Pila* push(Pila* testa){
 }
 
 Pila* pop(Pila* testa){
+    Pila* app = testa;
     if(testa != NULL)
         testa = testa->next;
+    munmap(app, sizeof(Pila));
     return testa;
 }
 
@@ -51,6 +53,7 @@ int main(){
         printf("\n\n1) Aggiungi elemento\n");
         printf("2) Rimuovi elemento\n");
         printf("3) Stampa pila\n");
+        printf("4) Esci\n");
         printf("comando: ");
         scanf("%d", &comando);
         if(comando == 1)
