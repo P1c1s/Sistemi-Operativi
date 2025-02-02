@@ -61,10 +61,8 @@ void* produttore(void* args){
             addendi->vettore = (int*) realloc(vett, (index + 2) * sizeof(int));
 
         *(vett+index) = rand()%100;
-        addendi->numElementi++;
-        index++;
-        *(vett+index) = rand()%100;
-        addendi->numElementi++;
+        *(vett+index+1) = rand()%100;
+        addendi->numElementi += 2;
 
         pthread_mutex_unlock(&mutex);
 
@@ -96,14 +94,11 @@ void* sommatore(void* args){
                 operazioni->vettore = (int*) realloc(vettOp, (index + 3) * sizeof(int));
 
             *(vettOp + index) = *(vettAdd + (ind - 2));
-            operazioni->numElementi++;
-            index++;
-            *(vettOp + index) = *(vettAdd + (ind - 1));
-            operazioni->numElementi++;
-            index++;
+            *(vettOp + index + 1) = *(vettAdd + (ind - 1));
 
-            *(vettOp + index) = *(vettAdd + (ind - 2)) + *(vettAdd + (ind - 1));
-            operazioni->numElementi++;
+
+            *(vettOp + index + 3) = *(vettAdd + (ind - 2)) + *(vettAdd + (ind - 1));
+            operazioni->numElementi += 3;
 
             if(ind == 2){
                 free(addendi->vettore);
