@@ -8,11 +8,12 @@
 
 int controlloGrandezza(){
     char *carattere = (char*)malloc(sizeof(char));
-    int i = 1;
+    int i = 0;
     int fd = open(FILE, O_CREAT | O_RDONLY, S_IRWXU);
     if(fd == -1){
         fprintf(stderr, "Errore aperura file - controlloGrandezza()\n");
         close(fd);
+        exit(1);
     }
     while(read(fd, carattere, sizeof(char)) > 0)
         i++;

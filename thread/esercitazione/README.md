@@ -97,3 +97,9 @@ Quando entra un cliente, si danno le seguenti possibilità:
 - se il barbiere sta dormendo, il primo cliente che entra lo sveglia e viene immediatamente servito.
 
 Il barbiere e i clienti sono thread, le sedie e la poltrona sono risorse. Programmare barbiere e clienti usando i thread POSIX.
+
+#### Esercizio 6
+Implementare un programma al quale vengono passati 4 numeri di cui bisogna verificare la primalità.
+Ogni numero deve essere analizzato da un thread che aggiornerà un contatore globale.
+A fine programma verà stampato il valore del contatore globale con valore pari al numero degli elementi primi passati all'eseguibile.
+i.e. `./programma.out 22 44 111 99`
